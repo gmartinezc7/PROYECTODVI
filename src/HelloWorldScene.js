@@ -1,8 +1,12 @@
 import Phaser from 'phaser'
+//esto es una prueba para ver si funciona la actualizacion
 
 export default class HelloWorldScene extends Phaser.Scene {
 	constructor() {
-		super('hello-world')
+		super('Helloworldscene')
+		this.load = undefined
+		this.add = undefined
+		this.physics = undefined
 	}
 
 	preload() {
