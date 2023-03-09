@@ -31,7 +31,7 @@ export default class titulo extends Phaser.Scene {
 
 		// Escuchamos los eventos del ratón cuando interactual con nuestro sprite de "Start"
 	    this.start.on('pointerdown', pointer => {
-	    	this.scene.start('game');
+	    	this.scene.start('menuniveles');
 	    });
 
 	    /*this.start.on('pointerup', pointer => {
