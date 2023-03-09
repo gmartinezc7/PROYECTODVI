@@ -14,7 +14,7 @@ export default class titulo extends Phaser.Scene {
         
         this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
 		this.load.image('inicio', 'assets/inicio.png')
-		this.load.image('start', 'assets/start.png');
+		this.load.image('start', 'assets/start2.jpg');
 		this.load.image('start', 'assets/mascleto.png');
 	}
 
