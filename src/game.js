@@ -5,16 +5,15 @@ export default class game extends Phaser.Scene {
 
 	constructor() {
 		super({ key:'game'});
+        this.fondoJuego = undefined;
 	}
 
 	/**
 	 * Cargamos todos los assets que vamos a necesitar
 	 */
 	preload(){
-        
-        this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
-        this.load.image('sky2', 'https://labs.phaser.io/assets/skies/bigsky.png');
-        this.load.image('character', 'imagenes/mascleto.png');
+        this.load.image('fondo','assets/fondofinal.jpg')
+        this.load.image('character', 'assets/mascleto.png');
         this.load.image('coin', 'https://labs.phaser.io/assets/sprites/star.png');
 	}
 	
@@ -25,8 +24,10 @@ export default class game extends Phaser.Scene {
         var score = 0;
 
 		//Pintamos un fondo y creamos el personaje
-        this.add.image(400, 300, 'sky2')
-        var scoreText = this.add.text(0, 0, 'Score: ' + score, {fontFamily: 'Arial', fontSize: '44px', color: '#ffffff'});
+        this.fondoJuego = this.add.tileSprite(512,512,0,0,'fondo')
+
+
+        var scoreText = this.add.text(0, 0, 'Score: ' + score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
         this.character = this.physics.add.sprite(400, 500, 'character');
         this.character.setScale(0.4); 
         this.character.body.allowGravity = false;
@@ -37,9 +38,9 @@ export default class game extends Phaser.Scene {
 
         this.coin = this.physics.add.group({
             key: 'coin',
-            repeat: 1,
+            repeat: 5,
             allowGravity: false,
-            setXY: { x: 100, y: 500, stepX: 110 }
+            setXY: { x: 200, y: 300, stepX: 210 }
         });
     
         //Permitir obtener que teclas ha pulsado
@@ -55,6 +56,7 @@ export default class game extends Phaser.Scene {
 	}
 
     update() {
+        this.fondoJuego.tilePositionY -= 1;
 
         if(this.cursors.left.isDown) {
             this.character.setVelocityX(-500);
@@ -69,6 +71,7 @@ export default class game extends Phaser.Scene {
         else { 
             this.character.setVelocityX(0);
         }
+
 
     }
 }
