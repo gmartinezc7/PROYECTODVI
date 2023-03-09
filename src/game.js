@@ -29,9 +29,9 @@ export default class game extends Phaser.Scene {
 
 
         var scoreText = this.add.text(0, 0, 'Score: ' + score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
-        this.character = this.physics.add.sprite(400, 500, 'character');
+        this.character = this.physics.add.sprite(505, 800, 'character');
         this.character.setScale(0.4); 
-        this.character.body.allowGravity = false;
+        this.character.body.allowGravity = true;
         
         this.character.setCollideWorldBounds(true);
         
@@ -40,7 +40,7 @@ export default class game extends Phaser.Scene {
         this.coin = this.physics.add.group({
             key: 'coin',
             repeat: 5,
-            allowGravity: false,
+            allowGravity: true,
             setXY: { x: 200, y: 300, stepX: 210 }
         });
     
@@ -63,7 +63,7 @@ export default class game extends Phaser.Scene {
             this.character.setVelocityX(-500);
         }
         else if(this.cursors.up.isDown){
-            this.character.setVelocityY(-500);
+            this.character.setVelocityY(-200);
 
         }
         else if (this.cursors.right.isDown) {
