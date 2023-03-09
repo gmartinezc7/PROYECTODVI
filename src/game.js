@@ -24,6 +24,7 @@ export default class game extends Phaser.Scene {
         var score = 0;
 
 		//Pintamos un fondo y creamos el personaje
+        //para pintar un fondo que se mueva lo hacemos con sprite y que se actualice cada vez
         this.fondoJuego = this.add.tileSprite(512,512,0,0,'fondo')
 
 
