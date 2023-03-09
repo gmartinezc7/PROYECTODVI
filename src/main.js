@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 //import HelloWorldScene from './HelloWorldScene'
 import titulo from './titulo.js'
 import game from './game.js'
+import menuniveles from './menuniveles.js'
 
 const config = {
 	type: Phaser.AUTO,
@@ -14,7 +15,7 @@ const config = {
 			gravity: { y: 200 },
 		},
 	},
-	scene: [titulo, game],
+	scene: [titulo, game, menuniveles],
 }
 
 export default new Phaser.Game(config)
