@@ -2,10 +2,10 @@
 import Phaser from 'phaser'
 
 export default class game extends Phaser.Scene {
-
 	constructor() {
 		super({ key:'game'});
         this.fondoJuego = undefined;
+        this.valor = 0;
 	}
 
 	/**
@@ -14,7 +14,7 @@ export default class game extends Phaser.Scene {
 	preload(){
         this.load.image('fondo','assets/fondofinal.jpg')
         this.load.image('character', 'assets/mascleto.png');
-        this.load.image('coin', 'https://labs.phaser.io/assets/sprites/star.png');
+        this.load.image('coin', 'assets/bola_snaps/bola_de_luz_10.png');
 	}
 	
 	/**
@@ -39,9 +39,9 @@ export default class game extends Phaser.Scene {
 
         this.coin = this.physics.add.group({
             key: 'coin',
-            repeat: 5,
-            allowGravity: true,
-            setXY: { x: 200, y: 300, stepX: 210 }
+            repeat: 1,
+            allowGravity: false,
+            setXY: { x: 200, y: 300, stepX: 200 }
         });
     
         //Permitir obtener que teclas ha pulsado
@@ -57,10 +57,11 @@ export default class game extends Phaser.Scene {
 	}
 
     update() {
+        this.valor += 0.087;
         this.fondoJuego.tilePositionY -= 1;
-
         if(this.cursors.left.isDown) {
             this.character.setVelocityX(-500);
+            this.character.setRotation(this.valor*(-1));
         }
         else if(this.cursors.up.isDown){
             this.character.setVelocityY(-200);
@@ -68,8 +69,10 @@ export default class game extends Phaser.Scene {
         }
         else if (this.cursors.right.isDown) {
             this.character.setVelocityX(500);
+            this.character.setRotation(this.valor);
         }
         else { 
+            this.character.setRotation(this.valor);
             this.character.setVelocityX(0);
         }
 
