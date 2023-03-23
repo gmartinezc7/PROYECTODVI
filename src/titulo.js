@@ -13,7 +13,7 @@ export default class titulo extends Phaser.Scene {
 	preload(){
         
         this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
-		this.load.image('inicio', 'assets/inicio.png')
+		this.load.image('inicio', 'assets/inicio720.jpg')
 		this.load.image('start', 'assets/start2.jpg');
 		this.load.image('start', 'assets/mascleto.png');
 	}
@@ -23,11 +23,11 @@ export default class titulo extends Phaser.Scene {
 	*/
 	create() {
 		//Pintamos un fondo
-        this.inicio = this.add.image(512, 512, 'inicio')
+        this.inicio = this.add.image(360, 360, 'inicio')
 		
 
 		//Añadimo el botón de start
-		this.start = this.add.image(300, 800, 'start').setInteractive();
+		this.start = this.add.image(200, 500, 'start').setInteractive();
 
 		// Escuchamos los eventos del ratón cuando interactual con nuestro sprite de "Start"
 	    this.start.on('pointerdown', pointer => {

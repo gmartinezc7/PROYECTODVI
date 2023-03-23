@@ -7,8 +7,8 @@ import menuniveles from './menuniveles.js'
 const config = {
 	type: Phaser.AUTO,
 	parent: 'app',
-	width: 1024,
-	height: 1024,
+	width: 720,
+	height: 720,
 	physics: {
 		default: 'arcade',
 		arcade: {

@@ -11,7 +11,7 @@ export default class menuniveles extends Phaser.Scene {
 	 */
 	preload(){
         
-        this.load.image('niveles', 'assets/fondoniveles.jpg');
+        this.load.image('niveles', 'assets/fondoniveles720.jpg');
 		this.load.image('nivel1', 'assets/niveles/nivel1.jpg');
 		this.load.image('nivel2', 'assets/niveles/nivel2.jpg');
 		this.load.image('nivel3', 'assets/niveles/nivel3.jpg');
@@ -23,7 +23,7 @@ export default class menuniveles extends Phaser.Scene {
 	*/
 	create() {
 		//Pintamos un fondo
-        this.inicio = this.add.image(512, 512, 'niveles')
+        this.inicio = this.add.image(360, 360, 'niveles')
 		
 
 		//Añadimos los botones de niveles

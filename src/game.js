@@ -12,7 +12,7 @@ export default class game extends Phaser.Scene {
 	 * Cargamos todos los assets que vamos a necesitar
 	 */
 	preload(){
-        this.load.image('fondo','assets/fondofinal.jpg')
+        this.load.image('fondo','assets/fondo720.jpg')
         this.load.image('character', 'assets/mascleto.png');
         this.load.image('coin', 'assets/bola_snaps/bola_de_luz_10.png');
 	}
@@ -25,11 +25,11 @@ export default class game extends Phaser.Scene {
 
 		//Pintamos un fondo y creamos el personaje
         //para pintar un fondo que se mueva lo hacemos con sprite y que se actualice cada vez
-        this.fondoJuego = this.add.tileSprite(512,512,0,0,'fondo')
+        this.fondoJuego = this.add.tileSprite(360,360,0,0,'fondo')
 
 
         var scoreText = this.add.text(0, 0, 'Score: ' + score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
-        this.character = this.physics.add.sprite(505, 800, 'character');
+        this.character = this.physics.add.sprite(250, 400, 'character');
         this.character.setScale(0.4); 
         this.character.body.allowGravity = true;
         
