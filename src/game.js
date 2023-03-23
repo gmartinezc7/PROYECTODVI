@@ -22,60 +22,103 @@ export default class game extends Phaser.Scene {
 	*/
 	create() {
         var score = 0;
+        var espacioPulsado = false;
+        var rotacion = false;
 
-		//Pintamos un fondo y creamos el personaje
-        //para pintar un fondo que se mueva lo hacemos con sprite y que se actualice cada vez
+		//Pintamos un fondo y creamos el personaje para pintar un fondo que se mueva lo hacemos con sprite y que se actualice cada vez
         this.fondoJuego = this.add.tileSprite(360,360,0,0,'fondo')
 
-
+        //Marcador de puntuación
         var scoreText = this.add.text(0, 0, 'Score: ' + score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
-        this.character = this.physics.add.sprite(250, 400, 'character');
-        this.character.setScale(0.4); 
-        this.character.body.allowGravity = true;
-        
-        this.character.setCollideWorldBounds(true);
-        
-        //this.coin = this.physics.add.sprite(100, 400, 'coin');
 
+        //Se crea el personaje con sus propiedades
+        this.character = this.physics.add.sprite(360, 650, 'character');
+        this.character.setScale(0.3); 
+        this.character.body.allowGravity = true;
+        this.character.setCollideWorldBounds(true);
+
+        //Se crean las esferas de luz con sus propiedades
         this.coin = this.physics.add.group({
-            key: 'coin',
-            repeat: 1,
-            allowGravity: false,
-            setXY: { x: 200, y: 300, stepX: 200 }
+            allowGravity: false
+        });
+        this.time.addEvent({
+            delay: 5000, // tiempo en milisegundos entre cada moneda
+            callback: this.generateCoins,
+            callbackScope: this,
+            loop: true // para que se repita indefinidamente
         });
     
-        //Permitir obtener que teclas ha pulsado
-        this.cursors = this.input.keyboard.createCursorKeys();
-
         //Que el jugador recoga la moneda
         this.physics.add.overlap(this.character, this.coin, collectStar, null, this);
         function collectStar(character, coin){
             coin.disableBody(true, true);
-            score += 100; // Aumenta el puntaje del jugador en 10
+            score += 100; 
             scoreText.setText('Score: ' + score);
+            this.character.setVelocityY(-500);
+            if(score == 500){
+                this.scene.start('escenaFinal');
+            }
         }
+
+        //Permitir obtener que teclas ha pulsado
+        this.cursors = this.input.keyboard.createCursorKeys();
 	}
 
     update() {
-        this.valor += 0.087;
-        this.fondoJuego.tilePositionY -= 1;
-        if(this.cursors.left.isDown) {
-            this.character.setVelocityX(-500);
-            this.character.setRotation(this.valor*(-1));
+        if(this.cursors.space.isDown){
+            this.character.setVelocityY(-400);
+            this.espacioPulsado = true;
         }
-        else if(this.cursors.up.isDown){
-            this.character.setVelocityY(-200);
+        if(this.espacioPulsado){
+            this.valor += 0.087;
+            this.fondoJuego.tilePositionY -= 1;
 
+            if(this.cursors.left.isDown) {
+                this.character.setVelocityX(-500);
+                this.character.setRotation(this.valor*(-1));
+            }
+            else if(this.cursors.up.isDown){
+                this.character.setVelocityY(-200);
+            }
+            else if (this.cursors.right.isDown) {
+                this.character.setVelocityX(500);
+                this.character.setRotation(this.valor);
+            }
+            else { 
+                this.character.setRotation(this.valor);
+                this.character.setVelocityX(0);
+            }
         }
-        else if (this.cursors.right.isDown) {
-            this.character.setVelocityX(500);
-            this.character.setRotation(this.valor);
-        }
-        else { 
-            this.character.setRotation(this.valor);
-            this.character.setVelocityX(0);
-        }
+    }
 
-
+    //Función que genera monedas aleatoriamente
+    generateCoins(){
+        //Generar monedas aleatoriamente
+        const numCoins = Phaser.Math.Between(1, 2);
+        for(let i = 0; i < numCoins; i++){
+            const coinX = Phaser.Math.Between(0, 720);
+            const coinY = Phaser.Math.Between(0, 720);
+            const coin = this.coin.create(coinX, coinY, 'coin');
+            coin.setScale(0.2);
+        }
+        //Generar monedas cerca unas de otras
+        /*for(let i = 0; i < numCoins; i++){
+            // Si no hay monedas en el juego, genera la primera moneda en una posición aleatoria
+            if (this.coin.getLength() === 0) {
+                const coinX = Phaser.Math.Between(0, 1024);
+                const coinY = Phaser.Math.Between(0, 1024);
+                const coin = this.coin.create(coinX, coinY, 'coin');
+                coin.setScale(0.2);
+                this.coinPosition = new Phaser.Math.Vector2(coinX, coinY);
+                return;
+            }
+            
+            // Genera una nueva moneda cerca de la posición anterior
+            const coinX = Phaser.Math.Between(this.coinPosition.x - 110, this.coinPosition.x + 110);
+            const coinY = Phaser.Math.Between(this.coinPosition.y - 110, this.coinPosition.y + 110);
+            const coin = this.coin.create(coinX, coinY, 'coin');
+            coin.setScale(0.2);
+            this.coinPosition = new Phaser.Math.Vector2(coinX, coinY);
+        }*/
     }
 }
