@@ -23,7 +23,6 @@ export default class game extends Phaser.Scene {
 	create() {
         var score = 0;
         var espacioPulsado = false;
-        var rotacion = false;
 
 		//Pintamos un fondo y creamos el personaje para pintar un fondo que se mueva lo hacemos con sprite y que se actualice cada vez
         this.fondoJuego = this.add.tileSprite(360,360,0,0,'fondo')
@@ -55,10 +54,12 @@ export default class game extends Phaser.Scene {
             score += 100; 
             scoreText.setText('Score: ' + score);
             this.character.setVelocityY(-500);
-            if(score == 500){
+            if(score == 900){
                 this.scene.start('escenaFinal');
             }
         }
+
+        this.physics.world.enable(this.character);
 
         //Permitir obtener que teclas ha pulsado
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -68,6 +69,7 @@ export default class game extends Phaser.Scene {
         if(this.cursors.space.isDown){
             this.character.setVelocityY(-400);
             this.espacioPulsado = true;
+            this.character.setCollideWorldBounds(false);
         }
         if(this.espacioPulsado){
             this.valor += 0.087;
@@ -76,6 +78,7 @@ export default class game extends Phaser.Scene {
             if(this.cursors.left.isDown) {
                 this.character.setVelocityX(-500);
                 this.character.setRotation(this.valor*(-1));
+                this.physics.world.wrap(this.character, 0);
             }
             else if(this.cursors.up.isDown){
                 this.character.setVelocityY(-200);
@@ -83,10 +86,16 @@ export default class game extends Phaser.Scene {
             else if (this.cursors.right.isDown) {
                 this.character.setVelocityX(500);
                 this.character.setRotation(this.valor);
+                this.physics.world.wrap(this.character, 50);
             }
             else { 
                 this.character.setRotation(this.valor);
                 this.character.setVelocityX(0);
+            }
+            
+            //En el caso de que el jugador haya caído hacia bajo, pierde y da paso a la escena final
+            if(this.character.y > 1000){
+                this.scene.start('escenaFinal');
             }
         }
     }
