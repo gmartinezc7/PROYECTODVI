@@ -12,7 +12,9 @@ export default class menuniveles extends Phaser.Scene {
 	preload(){
         
         this.load.image('niveles', 'assets/fondoniveles.jpg');
-		this.load.image('nivel1', 'assets/1level.jpg');
+		this.load.image('nivel1', 'assets/niveles/nivel1.jpg');
+		this.load.image('nivel2', 'assets/niveles/nivel2.jpg');
+		this.load.image('nivel3', 'assets/niveles/nivel3.jpg');
         this.load.image('back', 'assets/back.jpg');
 	}
 
@@ -34,12 +36,12 @@ export default class menuniveles extends Phaser.Scene {
 	    	this.scene.start('game');
 	    });
 
-		this.level2 = this.add.image(650, 300, 'nivel1').setInteractive();		
+		this.level2 = this.add.image(650, 300, 'nivel2').setInteractive();		
 	    this.level2.on('pointerdown', pointer => {
 	    	this.scene.start('game');
 	    });
 
-        this.level3 = this.add.image(350, 500, 'nivel1').setInteractive();		
+        this.level3 = this.add.image(350, 500, 'nivel3').setInteractive();		
 	    this.level3.on('pointerdown', pointer => {
 	    	this.scene.start('game');
 	    });
