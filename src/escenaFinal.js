@@ -11,6 +11,7 @@ export default class escenaFinal extends Phaser.Scene {
 	 */
 	preload(){
         this.load.image('niveles', 'assets/fondoniveles.jpg');
+		this.load.image('gameOver', 'assets/game_over.png');
         //this.load.image('win', 'assets/win.jpg');
 		//this.load.image('lose', 'assets/lose.jpg');
 	}
@@ -20,7 +21,11 @@ export default class escenaFinal extends Phaser.Scene {
 	*/
 	create() {
 		//Pintamos un fondo
-        this.inicio = this.add.image(512, 512, 'niveles')
+        this.inicio = this.add.image(360, 360, 'niveles')
+
+
+		this.texto = this.add.image(360, 360, 'gameOver')
+		
 
         //La escena se queda pausada ya que hemos perdido
 		//this.scene.pause();
