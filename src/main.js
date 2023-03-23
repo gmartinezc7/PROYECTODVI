@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import titulo from './titulo.js'
 import game from './game.js'
 import menuniveles from './menuniveles.js'
+import escenaFinal from './escenaFinal.js'
 
 const config = {
 	type: Phaser.AUTO,
@@ -12,10 +13,11 @@ const config = {
 	physics: {
 		default: 'arcade',
 		arcade: {
+			debug: true,
 			gravity: { y: 200 },
 		},
 	},
-	scene: [titulo, game, menuniveles],
+	scene: [titulo, menuniveles, game, escenaFinal],
 }
 
 export default new Phaser.Game(config)
