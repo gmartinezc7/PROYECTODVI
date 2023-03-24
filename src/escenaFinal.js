@@ -12,6 +12,7 @@ export default class escenaFinal extends Phaser.Scene {
 	preload(){
         this.load.image('niveles', 'assets/fondoniveles.jpg');
 		this.load.image('gameOver', 'assets/game_over.png');
+		this.load.image('menu', 'assets/menu.jpg');
         //this.load.image('win', 'assets/win.jpg');
 		//this.load.image('lose', 'assets/lose.jpg');
 	}
@@ -25,6 +26,11 @@ export default class escenaFinal extends Phaser.Scene {
 
 
 		this.texto = this.add.image(360, 360, 'gameOver')
+
+		this.buttonBack = this.add.image(550,660,'menu').setInteractive();
+        this.buttonBack.on('pointerdown', pointer => {
+            this.scene.start('menuniveles');
+	    });
 		
 
         //La escena se queda pausada ya que hemos perdido
