@@ -2,10 +2,14 @@
 import Phaser from 'phaser'
 
 export default class game extends Phaser.Scene {
+
 	constructor() {
 		super({ key:'game'});
+        Phaser.Scene.call(this,{key:'game'});
         this.fondoJuego = undefined;
         this.valor = 0;
+        //this.nivel = this.data.get.arguments();
+        //this.nivel = this.data;
 	}
 
 	/**
@@ -74,6 +78,7 @@ export default class game extends Phaser.Scene {
         if(this.espacioPulsado){
             this.valor += 0.087;
             this.fondoJuego.tilePositionY -= 1;
+            //this.fondoJuego.tilePositionY -= this.nivel.numero;
 
             if(this.cursors.left.isDown) {
                 this.character.setVelocityX(-500);

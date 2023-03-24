@@ -27,6 +27,10 @@ export default class menuniveles extends Phaser.Scene {
 	create() {
 		//Pintamos un fondo
         this.inicio = this.add.image(360, 360 , 'niveles')
+
+		var nivel = {
+			numero: 1
+		};
 		
 
 		//Añadimos los botones de niveles
@@ -36,32 +40,38 @@ export default class menuniveles extends Phaser.Scene {
 
         this.level1 = this.add.image(150, 200, 'nivel1').setInteractive();		
 	    this.level1.on('pointerdown', pointer => {
-	    	this.scene.start('game');
+			nivel.numero = 1;
+	    	this.scene.start('game', nivel);
 	    });
 
 		this.level2 = this.add.image(500, 200, 'nivel2').setInteractive();		
 	    this.level2.on('pointerdown', pointer => {
-	    	this.scene.start('game');
+	    	nivel.numero = 2;
+	    	this.scene.start('game', nivel);
 	    });
 
         this.level3 = this.add.image(150, 350, 'nivel3').setInteractive();		
 	    this.level3.on('pointerdown', pointer => {
-	    	this.scene.start('game');
+	    	nivel.numero = 3;
+	    	this.scene.start('game', nivel);
 	    });
 
         this.level4 = this.add.image(500, 350, 'nivel4').setInteractive();		
 	    this.level4.on('pointerdown', pointer => {
-	    	this.scene.start('game');
+	    	nivel.numero = 4;
+	    	this.scene.start('game', nivel);
 	    });
 
         this.level5 = this.add.image(150, 500, 'nivel5').setInteractive();		
 	    this.level5.on('pointerdown', pointer => {
-	    	this.scene.start('game');
+	    	nivel.numero = 5;
+	    	this.scene.start('game', nivel);
 	    });
 
         this.level6 = this.add.image(500, 500, 'nivel6').setInteractive();		
 	    this.level6.on('pointerdown', pointer => {
-	    	this.scene.start('game');
+	    	nivel.numero = 6;
+	    	this.scene.start('game', nivel);
 	    });
 
         this.buttonBack = this.add.image(560,640,'back').setInteractive();
