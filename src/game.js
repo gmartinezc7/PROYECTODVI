@@ -3,13 +3,12 @@ import Phaser from 'phaser'
 
 export default class game extends Phaser.Scene {
 
-	constructor() {
+	constructor(nivel) {
 		super({ key:'game'});
-        Phaser.Scene.call(this,{key:'game'});
         this.fondoJuego = undefined;
         this.valor = 0;
-        //this.nivel = this.data.get.arguments();
-        //this.nivel = this.data;
+        //this.nivel = nivel;
+        //this.nivel= this.scene.settings.data;
 	}
 
 	/**
@@ -70,6 +69,29 @@ export default class game extends Phaser.Scene {
 	}
 
     update() {
+        /*if (this.character.y < 240){
+            this.fondoJuego.tilePositionY -= 2;
+        }
+        if (this.character.y < 220){
+            this.fondoJuego.tilePositionY -= 3;
+        }
+        if (this.character.y < 200){
+            this.fondoJuego.tilePositionY -= 4;
+        }
+        if (this.character.y < 180){
+            this.fondoJuego.tilePositionY -= 5;
+        }
+        if (this.character.y < 120){
+            this.fondoJuego.tilePositionY -= 6;
+        }
+        if (this.character.y < 100){
+            this.fondoJuego.tilePositionY -= 7;
+        }
+        if (this.character.y < 80){
+            this.fondoJuego.tilePositionY -= 8;
+        }*/
+
+        
         if(this.cursors.space.isDown){
             this.character.setVelocityY(-400);
             this.espacioPulsado = true;
@@ -78,6 +100,7 @@ export default class game extends Phaser.Scene {
         if(this.espacioPulsado){
             this.valor += 0.087;
             this.fondoJuego.tilePositionY -= 1;
+            
             //this.fondoJuego.tilePositionY -= this.nivel.numero;
 
             if(this.cursors.left.isDown) {
