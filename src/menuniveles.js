@@ -64,7 +64,7 @@ export default class menuniveles extends Phaser.Scene {
 	    	this.scene.start('game');
 	    });
 
-        this.buttonBack = this.add.image(550,620,'back').setInteractive();
+        this.buttonBack = this.add.image(560,640,'back').setInteractive();
         this.buttonBack.on('pointerdown', pointer => {
             this.scene.start('titulo');
 	    });
