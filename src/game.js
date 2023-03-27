@@ -17,7 +17,10 @@ export default class game extends Phaser.Scene {
 	preload(){
         this.load.image('fondo','assets/fondo720.jpg')
         this.load.image('character', 'assets/mascleto.png');
-        this.load.image('coin', 'assets/bola_snaps/bola_de_luz_10.png');
+        this.load.image('coin1', 'assets/Bolas/bola_de_luz_amarilla.png');
+        this.load.image('coin2', 'assets/Bolas/bola_de_luz_morada.png');
+        this.load.image('coin3', 'assets/Bolas/bola_de_luz_roja.png');
+        this.load.image('coin4', 'assets/Bolas/bola_de_luz_verde.png');
 	}
 	
 	/**
@@ -35,7 +38,7 @@ export default class game extends Phaser.Scene {
 
         //Se crea el personaje con sus propiedades
         this.character = this.physics.add.sprite(360, 650, 'character');
-        this.character.setScale(0.3); 
+        this.character.setScale(0.2); 
         this.character.body.allowGravity = true;
         this.character.setCollideWorldBounds(true);
 
@@ -69,13 +72,13 @@ export default class game extends Phaser.Scene {
 	}
 
     update() {
-        /*if (this.character.y < 240){
-            this.fondoJuego.tilePositionY -= 2;
+        /*if (this.character.y < 350){
+            this.fondoJuego.tilePositionY -= 4;
+        }*/
+        if (this.character.y < 250){
+            this.fondoJuego.tilePositionY -= 4;
         }
-        if (this.character.y < 220){
-            this.fondoJuego.tilePositionY -= 3;
-        }
-        if (this.character.y < 200){
+        /*if (this.character.y < 200){
             this.fondoJuego.tilePositionY -= 4;
         }
         if (this.character.y < 180){
@@ -92,7 +95,7 @@ export default class game extends Phaser.Scene {
         }*/
 
         
-        if(this.cursors.space.isDown){
+        if(this.cursors.space.isDown && !this.espacioPulsado){
             this.character.setVelocityY(-400);
             this.espacioPulsado = true;
             this.character.setCollideWorldBounds(false);
@@ -100,7 +103,7 @@ export default class game extends Phaser.Scene {
         if(this.espacioPulsado){
             this.valor += 0.087;
             this.fondoJuego.tilePositionY -= 1;
-            
+
             //this.fondoJuego.tilePositionY -= this.nivel.numero;
 
             if(this.cursors.left.isDown) {
@@ -120,10 +123,13 @@ export default class game extends Phaser.Scene {
                 this.character.setRotation(this.valor);
                 this.character.setVelocityX(0);
             }
-            
-            //En el caso de que el jugador haya caído hacia bajo, pierde y da paso a la escena final
+
+            //En el caso de que el jugador haya caído hacia bajo, pierde y da paso a la escena final.
+            //Se reinian los valores por si volvemos a querer jugar al juego
             if(this.character.y > 1000){
                 this.scene.start('escenaFinal');
+                this.espacioPulsado = false;
+                this.valor = 0;
             }
         }
     }
@@ -132,12 +138,24 @@ export default class game extends Phaser.Scene {
     generateCoins(){
         //Generar monedas aleatoriamente
         const numCoins = Phaser.Math.Between(1, 2);
+        //const colorCoin = Phaser.Math.Between(1, 4);
+        const coinColors = ['coin1', 'coin2', 'coin3', 'coin4'];
         for(let i = 0; i < numCoins; i++){
             const coinX = Phaser.Math.Between(0, 720);
             const coinY = Phaser.Math.Between(0, 720);
-            const coin = this.coin.create(coinX, coinY, 'coin');
+            const colorIndex = Phaser.Math.Between(0, coinColors.length - 1);
+            const coin = this.coin.create(coinX, coinY, coinColors[colorIndex]);
             coin.setScale(0.2);
         }
+
+        /*this.tweens.add({
+            targets: this.coin,
+            alpha: 0.5,
+            duration: 500,
+            ease: 'Power2',
+            yoyo: true,
+            repeat: -1
+        });*/
         //Generar monedas cerca unas de otras
         /*for(let i = 0; i < numCoins; i++){
             // Si no hay monedas en el juego, genera la primera moneda en una posición aleatoria
