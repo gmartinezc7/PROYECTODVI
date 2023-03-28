@@ -141,7 +141,7 @@ export default class game extends Phaser.Scene {
         //const colorCoin = Phaser.Math.Between(1, 4);
         const coinColors = ['coin1', 'coin2', 'coin3', 'coin4'];
         for(let i = 0; i < numCoins; i++){
-            const coinX = Phaser.Math.Between(0, 720);
+            const coinX = Phaser.Math.Between(100, 620);
             const coinY = Phaser.Math.Between(0, 720);
             const colorIndex = Phaser.Math.Between(0, coinColors.length - 1);
             const coin = this.coin.create(coinX, coinY, coinColors[colorIndex]);
