@@ -105,10 +105,11 @@ export default class game extends Phaser.Scene {
             this.fondoJuego.tilePositionY -= 1;
 
             //this.fondoJuego.tilePositionY -= this.nivel.numero;
-
+            var aux = this.valor;
             if(this.cursors.left.isDown) {
                 this.character.setVelocityX(-500);
                 this.character.setRotation(this.valor*(-1));
+                aux = this.valor*(-1);
                 this.physics.world.wrap(this.character, 0);
             }
             else if(this.cursors.up.isDown){
@@ -117,10 +118,11 @@ export default class game extends Phaser.Scene {
             else if (this.cursors.right.isDown) {
                 this.character.setVelocityX(500);
                 this.character.setRotation(this.valor);
+                aux = this.valor;
                 this.physics.world.wrap(this.character, 50);
             }
             else { 
-                this.character.setRotation(this.valor);
+                this.character.setRotation(aux);
                 this.character.setVelocityX(0);
             }
 
