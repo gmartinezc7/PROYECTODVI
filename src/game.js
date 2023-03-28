@@ -60,8 +60,8 @@ export default class game extends Phaser.Scene {
             score += 100; 
             scoreText.setText('Score: ' + score);
             this.character.setVelocityY(-500);
-            if(score == 900){
-                this.scene.start('escenaFinal');
+            if(score == 200){
+                this.scene.start('escenaFinal',{numero : 1});                
             }
         }
 
@@ -127,7 +127,8 @@ export default class game extends Phaser.Scene {
             //En el caso de que el jugador haya caído hacia bajo, pierde y da paso a la escena final.
             //Se reinian los valores por si volvemos a querer jugar al juego
             if(this.character.y > 1000){
-                this.scene.start('escenaFinal');
+                this.scene.start('escenaFinal',{numero: 0});
+                //falta resetear todos los valores
                 this.espacioPulsado = false;
                 this.valor = 0;
             }
