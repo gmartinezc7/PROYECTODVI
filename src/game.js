@@ -192,7 +192,7 @@ export default class game extends Phaser.Scene {
         this.score += 100; 
         this.scoreText.setText('Score: ' + this.score);
         this.character.setVelocityY(-350);
-        if(this.score == 200){
+        if(this.score == 400){
             this.scene.start('escenaFinal',{numero : 1}); 
             this.espacioPulsado = false;
             this.valor = 0;     
