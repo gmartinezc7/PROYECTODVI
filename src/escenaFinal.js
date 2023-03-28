@@ -4,6 +4,7 @@ export default class escenaFinal extends Phaser.Scene {
 	
 	constructor() {
 		super({ key:'escenaFinal'});
+		this.final = 0;
 	}
 
 	/**
@@ -18,7 +19,7 @@ export default class escenaFinal extends Phaser.Scene {
 	}
 
 	init(data){
-		this.final = data;
+		this.final = data.numero;
 		//console.log('final: %d',data);
 	}
 

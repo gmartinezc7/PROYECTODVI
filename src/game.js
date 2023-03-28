@@ -61,7 +61,7 @@ export default class game extends Phaser.Scene {
             scoreText.setText('Score: ' + score);
             this.character.setVelocityY(-500);
             if(score == 200){
-                this.scene.start('escenaFinal',{numero : 1});                
+                this.scene.start('escenaFinal',{numero : 1});      
             }
         }
 
