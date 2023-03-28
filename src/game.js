@@ -27,14 +27,14 @@ export default class game extends Phaser.Scene {
 	* Creación de los elementos de la escena principal de juego
 	*/
 	create() {
-        var score = 0;
+        this.score = 0;
         var espacioPulsado = false;
 
 		//Pintamos un fondo y creamos el personaje para pintar un fondo que se mueva lo hacemos con sprite y que se actualice cada vez
         this.fondoJuego = this.add.tileSprite(360,360,0,0,'fondo')
 
         //Marcador de puntuación
-        var scoreText = this.add.text(0, 0, 'Score: ' + score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
+        this.scoreText = this.add.text(0, 0, 'Score: ' + this.score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
 
         //Se crea el personaje con sus propiedades
         this.character = this.physics.add.sprite(360, 650, 'character');
@@ -46,24 +46,16 @@ export default class game extends Phaser.Scene {
         this.coin = this.physics.add.group({
             allowGravity: false
         });
-        this.time.addEvent({
-            delay: 5000, // tiempo en milisegundos entre cada moneda
+        this.evento = this.time.addEvent({
+            delay: 6000, // tiempo en milisegundos entre cada moneda
             callback: this.generateCoins,
             callbackScope: this,
-            loop: true // para que se repita indefinidamente
+            loop: true, // para que se repita indefinidamente
+            paused: true
         });
     
         //Que el jugador recoga la moneda
-        this.physics.add.overlap(this.character, this.coin, collectStar, null, this);
-        function collectStar(character, coin){
-            coin.disableBody(true, true);
-            score += 100; 
-            scoreText.setText('Score: ' + score);
-            this.character.setVelocityY(-500);
-            if(score == 200){
-                this.scene.start('escenaFinal',{numero : 1});      
-            }
-        }
+        this.physics.add.overlap(this.character, this.coin, this.collectStar, null, this);
 
         this.physics.world.enable(this.character);
 
@@ -72,10 +64,11 @@ export default class game extends Phaser.Scene {
 	}
 
     update() {
+        var rotacionIzquierda = false;
         /*if (this.character.y < 350){
             this.fondoJuego.tilePositionY -= 4;
         }*/
-        if (this.character.y < 250){
+        if (this.character.y < 350){
             this.fondoJuego.tilePositionY -= 4;
         }
         /*if (this.character.y < 200){
@@ -96,33 +89,47 @@ export default class game extends Phaser.Scene {
 
         
         if(this.cursors.space.isDown && !this.espacioPulsado){
-            this.character.setVelocityY(-400);
+            this.character.setVelocityY(-350);
             this.espacioPulsado = true;
             this.character.setCollideWorldBounds(false);
         }
         if(this.espacioPulsado){
-            this.valor += 0.087;
+            //this.valor += 0.087;
             this.fondoJuego.tilePositionY -= 1;
 
+            this.evento.paused = false;
+
             //this.fondoJuego.tilePositionY -= this.nivel.numero;
-            var aux = this.valor;
+
             if(this.cursors.left.isDown) {
+                rotacionIzquierda = true;
+                if(rotacionIzquierda) {
+                    this.valor += -0.087;
+                }
                 this.character.setVelocityX(-500);
-                this.character.setRotation(this.valor*(-1));
-                aux = this.valor*(-1);
+                this.character.setRotation(this.valor);
                 this.physics.world.wrap(this.character, 0);
             }
             else if(this.cursors.up.isDown){
                 this.character.setVelocityY(-200);
             }
             else if (this.cursors.right.isDown) {
+                rotacionIzquierda = false;
+                if(!rotacionIzquierda) {
+                    this.valor += 0.087;
+                }
                 this.character.setVelocityX(500);
                 this.character.setRotation(this.valor);
-                aux = this.valor;
                 this.physics.world.wrap(this.character, 50);
             }
             else { 
-                this.character.setRotation(aux);
+                if(rotacionIzquierda) {
+                    this.valor += -0.087;
+                }
+                else{
+                    this.valor += 0.087;
+                }
+                this.character.setRotation(this.valor);
                 this.character.setVelocityX(0);
             }
 
@@ -178,5 +185,17 @@ export default class game extends Phaser.Scene {
             coin.setScale(0.2);
             this.coinPosition = new Phaser.Math.Vector2(coinX, coinY);
         }*/
+    }
+
+    collectStar(character, coin){
+        coin.disableBody(true, true);
+        this.score += 100; 
+        this.scoreText.setText('Score: ' + this.score);
+        this.character.setVelocityY(-350);
+        if(this.score == 200){
+            this.scene.start('escenaFinal',{numero : 1}); 
+            this.espacioPulsado = false;
+            this.valor = 0;     
+        }
     }
 }
