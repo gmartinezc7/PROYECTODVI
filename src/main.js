@@ -7,7 +7,7 @@ import escenaFinal from './escenaFinal.js'
 
 const config = {
 	type: Phaser.AUTO,
-	parent: 'app',
+	parent: 'phaser-game',
 	width: 720,
 	height: 720,
 	physics: {

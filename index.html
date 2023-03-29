@@ -9,28 +9,24 @@
 	<link rel="stylesheet" href="style.css">
 	<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 	<style>
-		canvas{
+		canvas {
 			position:relative;
 			top: 0px;
-			left: 600px;
-			
-			background-color: red;
+			left: 300px;
 		}
 	</style>
-	<script src="phaser.min.js"></script>
 </head>
 
 <body id=body>
-	<script src="phaser.min.js"></script>
-	<script type="module" src="src/main.js"></script>
 	<header id="header">
 		<img class="titulo" src="assets/titulo_web.png" width="1300" alt="logoJuego" style="position:relative; margin: 25px 0px 50px 0px; ">
 	</header>
 
+	<div id="phaser-game"></div>
 	
 	<div class="canvas">
 		<script type="module" src="src/main.js" ></script>
-		<canvas id="juego" width="720" height="720" ></canvas>
+		<canvas id="juego" width="720" height="720"></canvas>
 	</div>
 
 	<div id="descripcion" class="text">
@@ -58,12 +54,12 @@
 
 	<div id="controles" class="text">
 		<h2 style="color: rgb(255, 170, 0); margin: 0px 0px 100px 0px; font-size: 40px;" align="center" >CONTROLES</h2>
-		<img class="controles" src="assets/gif_flecha_izq.gif"  style="position:relative; left:200px; width:200px; border:none;" alt="controles2" >
+		<img class="controles" src="assets/gif_flecha_izq.gif"  style="position:relative; left:200px; width:200px; border:none;" alt="controles2">
 		<img class="controles" src="assets/gif_flecha_der.gif"  style="position:relative; left:210px; width:200px; border:none;" alt="controles2">
 		<img class="controles" src="assets/tecla_espacio.gif"  style="position:relative; left: 325px; width:300px; border:none;" width="300" alt="controles">
 		<marquee direction="up" scrolldelay="80" height= 100px> 
-		<p style="color: rgb(255, 128, 0);  font-size: 40px;" class="objetivo" style="padding: 10px;">
-			MOVE LEFT - MOVE RIGHT - JUMP START   
+		<p style="color: rgb(255, 128, 0); margin: 50px 0px 0px 135px; font-size: 40px;" align="center" class="objetivo" style="padding: 10px;">
+			MOVE RIGHT - MOVE LEFT - JUMP START   
 		</p>
 	</marquee>  
 		
@@ -83,6 +79,7 @@
 			<p align="right" style="color:red; margin: 0px 150px 0px;">Gonzalo Martinéz Carrera</p>
 			<p align="right" style="color:red; margin: 0px 150px 0px;"> Victoria Arduini</p>
 			<img src="assets/logo_web.png" width="500" alt="logocompania" style="position:relative; float:right; right:0px;  bottom:0px; z-index:2;">
+			
 	
 		</div>
 </body>
