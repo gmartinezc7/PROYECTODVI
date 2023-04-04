@@ -7,9 +7,6 @@ export default class game extends Phaser.Scene {
 		super({ key:'game'});
         this.fondoJuego = undefined;
         this.valor = 0;
-        this.height = 600;
-        this.width = 600;
-        
         //this.nivel = nivel;
         //this.nivel= this.scene.settings.data;
 	}
@@ -24,7 +21,6 @@ export default class game extends Phaser.Scene {
         this.load.image('coin2', 'assets/Bolas/bola_de_luz_morada.png');
         this.load.image('coin3', 'assets/Bolas/bola_de_luz_roja.png');
         this.load.image('coin4', 'assets/Bolas/bola_de_luz_verde.png');
-        this.load.image('platform', 'assets/plataforma.png');
 	}
 	
 	/**
@@ -50,9 +46,6 @@ export default class game extends Phaser.Scene {
         this.coin = this.physics.add.group({
             allowGravity: false
         });
-        this.platform = this.physics.add.group({
-            allowGravity : false
-        })
         this.evento = this.time.addEvent({
             delay: 6000, // tiempo en milisegundos entre cada moneda
             callback: this.generateCoins,
@@ -60,18 +53,9 @@ export default class game extends Phaser.Scene {
             loop: true, // para que se repita indefinidamente
             paused: true
         });
-
-        this.evento2 = this.time.addEvent({
-            delay: 6000, // tiempo en milisegundos entre cada moneda
-            callback: this.generatePlatforms,
-            callbackScope: this,
-            loop: true, // para que se repita indefinidamente
-            paused: true
-        });
     
         //Que el jugador recoga la moneda
         this.physics.add.overlap(this.character, this.coin, this.collectStar, null, this);
-        this.physics.add.overlap(this.character, this.platform, this.collectPlatform, null, this);
 
         this.physics.world.enable(this.character);
 
@@ -87,8 +71,6 @@ export default class game extends Phaser.Scene {
         if (this.character.y < 350){
             this.fondoJuego.tilePositionY -= 4;
         }
-
-        //this.platform.incY;
         /*if (this.character.y < 200){
             this.fondoJuego.tilePositionY -= 4;
         }
@@ -113,10 +95,9 @@ export default class game extends Phaser.Scene {
         }
         if(this.espacioPulsado){
             //this.valor += 0.087;
-            //this.fondoJuego.tilePositionY -= 1;
+            this.fondoJuego.tilePositionY -= 1;
 
             this.evento.paused = false;
-            this.evento2.paused = false;
 
             //this.fondoJuego.tilePositionY -= this.nivel.numero;
 
@@ -126,7 +107,7 @@ export default class game extends Phaser.Scene {
                     this.valor += -0.087;
                 }
                 this.character.setVelocityX(-500);
-                //this.character.setRotation(this.valor);
+                this.character.setRotation(this.valor);
                 this.physics.world.wrap(this.character, 0);
             }
             else if(this.cursors.up.isDown){
@@ -138,7 +119,7 @@ export default class game extends Phaser.Scene {
                     this.valor += 0.087;
                 }
                 this.character.setVelocityX(500);
-                //this.character.setRotation(this.valor);
+                this.character.setRotation(this.valor);
                 this.physics.world.wrap(this.character, 50);
             }
             else { 
@@ -148,7 +129,7 @@ export default class game extends Phaser.Scene {
                 else{
                     this.valor += 0.087;
                 }
-                //this.character.setRotation(this.valor);
+                this.character.setRotation(this.valor);
                 this.character.setVelocityX(0);
             }
 
@@ -217,45 +198,4 @@ export default class game extends Phaser.Scene {
             this.valor = 0;     
         }
     }
-
-    collectPlatform (character, platform){
-        this.character.setVelocityY(-350);        
-    }
-
-    generatePlatforms(){
-        //Generar monedas aleatoriamente
-        const numPlatfs= Phaser.Math.Between(1, 2);
-        //const colorCoin = Phaser.Math.Between(1, 4);
-        const platformText = 'platform';
-        for(let i = 0; i < numPlatfs; i++){
-            const platX = Phaser.Math.Between(100, 620);
-            const platY = Phaser.Math.Between(0, 720);
-            const platform = this.platform.create(platX, platY, platformText);
-            platform.setScale(0.5);
-        }
-    }
-
-    /*generatePlatforms (platformCount){
-        platformGap = Math.round(this.height/platformCount);
-
-        for (let i = 0; i < platformCount; i++){
-            //para no crearlas en el medio hacemos uno para las plataformas de la derecha
-            //y otro para las plataformas de la izquierda
-            let xpos = 0;
-            do {
-                xpos = this.randomInteger(25, this.width - 25 -100);
-            } while (xpos > this.width / 2 - 100*1.5 && xpos < this.width/2 + 100/2);
-            let y = (this.height/1.5) - i*platformGap;
-            //this.platforms.push(new platformCount(xpos,y));
-            const platformTexture = 'plataforma';
-            const platform = this.platform.create(xpos, y, platformTexture);
-        }
-
-    }
-
-    randomInteger (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }*/
-
-    
 }
