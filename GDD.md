@@ -206,6 +206,27 @@ Todos los elementos que forman el mapa tienen que mezclarse en el fondo para que
 
 La pantalla del juego es de tamaño 720x720, y el mapa debe reflejar este tamaño en su longitud horizontal. Su longitud vertical depende de lo largo que sea el nivel.
 
+## Sonido
+
+Existen varios tipos de sonidos asociados a los eventos que ocurren durante el juego
+
+- **Sonido al obtener una esfera de luz**
+- **Sonido al colisionar con un enemigo**
+- **Sonido de salto**
+- **Sonido de potenciador obtenido**
+- **Sonido de potenciador acabado**
+- **Sonido al pulsar en un botón de menú**
+
+## Música
+
+A diferencia de los sonidos, la música será una reproducción en bucle de una melodía. Tiene que sonar de fondo y tiene que tener las opciones de volumen y silencio.
+
+Existen 3 pistas que pueden sonar dependiendo del estado del juego
+
+- Pista del menú principal y juego
+- Pista de condición de victoria
+- Pista de condición de derrota
+
 ## Referencias
 
 La idea principal del videojuego ha sido sacada del juego llamado "Mega Jump". Un juego basado en propulsar a un pequeño dinosaurio lo más alto posible mientras se recogen objetos especiales (power-ups) y monedas para comprar nuevos personajes.
