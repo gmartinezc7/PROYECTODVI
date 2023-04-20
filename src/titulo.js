@@ -26,8 +26,10 @@ export default class titulo extends Phaser.Scene {
         this.inicio = this.add.image(360, 360, 'inicio')
 		
 
-		//Añadimo el botón de start
+		//Añadimos el botón de start
 		this.start = this.add.image(200, 500, 'start').setInteractive();
+
+
 
 		// Escuchamos los eventos del ratón cuando interactual con nuestro sprite de "Start"
 	    this.start.on('pointerdown', pointer => {
