@@ -18,7 +18,8 @@ export default class game extends Phaser.Scene {
 	 * Cargamos todos los assets que vamos a necesitar
 	 */
 	preload(){
-        this.load.image('fondo','assets/fondo720.jpg')
+        this.load.image('fondo','assets/fondo720.jpg');
+        //this.load.tilemapTiledJSON('tilemap','mapa_lvl1');
         this.load.image('character', 'assets/mascleto.png');
         this.load.image('coin1', 'assets/Bolas/bola_de_luz_amarilla.png');
         this.load.image('coin2', 'assets/Bolas/bola_de_luz_morada.png');
@@ -87,6 +88,11 @@ export default class game extends Phaser.Scene {
         if (this.character.y < 350){
             this.fondoJuego.tilePositionY -= 4;
         }
+
+        //para que las monedas y las plataformas vayan cayendo
+        //this.coin.setVelocityY(200);
+        //this.platform.setVelocityY(200);
+
 
         //this.platform.incY;
         /*if (this.character.y < 200){
