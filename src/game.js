@@ -13,6 +13,12 @@ export default class game extends Phaser.Scene {
         //this.nivel = nivel;
         //this.nivel= this.scene.settings.data;
 	}
+    init() {
+        if(!this.registry.get('selectedCharacter')){
+            this.registry.set('selectedCharacter', {image : 'character'})
+        }
+        this.selectedCharacter = this.registry.get('selectedCharacter');
+    }
 
 	/**
 	 * Cargamos todos los assets que vamos a necesitar
@@ -20,7 +26,7 @@ export default class game extends Phaser.Scene {
 	preload(){
         this.load.image('fondo','assets/fondo720.jpg');
         //this.load.tilemapTiledJSON('tilemap','mapa_lvl1');
-        this.load.image('character', 'assets/mascleto.png');
+        this.load.image('character', 'assets/Skins/mascleto.png');
         this.load.image('coin1', 'assets/Bolas/bola_de_luz_amarilla.png');
         this.load.image('coin2', 'assets/Bolas/bola_de_luz_morada.png');
         this.load.image('coin3', 'assets/Bolas/bola_de_luz_roja.png');
@@ -42,7 +48,9 @@ export default class game extends Phaser.Scene {
         this.scoreText = this.add.text(0, 0, 'Score: ' + this.score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
 
         //Se crea el personaje con sus propiedades
-        this.character = this.physics.add.sprite(360, 650, 'character');
+        //this.character = this.physics.add.sprite(360, 650, 'character');
+        
+        this.character = this.physics.add.sprite(360, 650, this.selectedCharacter.image);
         this.character.setScale(0.2); 
         this.character.body.allowGravity = true;
         this.character.setCollideWorldBounds(true);

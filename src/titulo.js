@@ -15,6 +15,7 @@ export default class titulo extends Phaser.Scene {
         this.load.image('sky', 'https://labs.phaser.io/assets/skies/space3.png');
 		this.load.image('inicio', 'assets/inicio720.jpg')
 		this.load.image('start', 'assets/start2.jpg');
+		this.load.image('tienda', 'assets/start2.jpg');
 		this.load.image('start', 'assets/mascleto.png');
 	}
 
@@ -28,6 +29,8 @@ export default class titulo extends Phaser.Scene {
 
 		//Añadimos el botón de start
 		this.start = this.add.image(200, 500, 'start').setInteractive();
+		this.start.setScale(0.6);
+
 
 
 
