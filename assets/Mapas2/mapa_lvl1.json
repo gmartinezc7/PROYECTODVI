@@ -2135,11 +2135,11 @@
         {
          "columns":10,
          "firstgid":1011,
-         "image":"Tile Dia.png",
+         "image":"Tile1.png",
          "imageheight":1440,
          "imagewidth":720,
          "margin":0,
-         "name":"Tile Dia",
+         "name":"Tile1",
          "spacing":0,
          "tilecount":200,
          "tileheight":72,
