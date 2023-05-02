@@ -69,7 +69,6 @@ export default class escenaFinal extends Phaser.Scene {
 		this.buttonBack = this.add.image(550,660,'menu').setInteractive();
 		this.buttonBack.setScale(0.7);
         this.buttonBack.on('pointerdown', pointer => {
-
 			this.scene.stop('game');
 			this.scene.stop('escenafinal');
 			this.scene.start('titulo');

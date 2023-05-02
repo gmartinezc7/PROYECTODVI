@@ -76,6 +76,7 @@ export default class game extends Phaser.Scene {
 			tileHeight: 32 
 		});
 
+
         const tileset1 = this.map.addTilesetImage('Tile'+ this.nivel, 'patronesTilemap');
         
 
@@ -301,6 +302,10 @@ export default class game extends Phaser.Scene {
     resetGame(player){
         player.cheatActivated = false;
 
+    }
+
+    restartScene(){
+        this.init();
     }
 
     

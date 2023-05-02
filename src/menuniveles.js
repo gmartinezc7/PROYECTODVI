@@ -26,6 +26,8 @@ export default class menuniveles extends Phaser.Scene {
 	* Creación de los elementos de la escena principal de juego
 	*/
 	create(data) {
+
+
 		//Pintamos un fondo
         this.inicio = this.add.image(360, 360 , 'niveles')
 
