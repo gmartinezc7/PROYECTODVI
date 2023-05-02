@@ -126,11 +126,6 @@ export default class tienda extends Phaser.Scene {
                 
             });
     
-        this.buttonBack = this.add.image(560,640,'back').setInteractive();
-        this.buttonBack.on('pointerdown', pointer => {
-            this.registry.set('selectedCharacter', selectedCharacter);
-            this.scene.start('menuniveles');
-	    });
 	}
 
 	update(){}
