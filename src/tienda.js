@@ -11,18 +11,18 @@ export default class tienda extends Phaser.Scene {
 	 */
 	preload(){
         
-        this.load.image('niveles', 'public/assets/fondoniveles720.jpg');
-        this.load.image('personaje0', 'public/assets/Skins/mascleto.png');
-        this.load.image('personaje1', 'public/assets/Skins/mascleto_skin_1.png');
-        this.load.image('personaje2', 'public/assets/Skins/mascleto_skin_2.png');
-        this.load.image('personaje3', 'public/assets/Skins/mascleto_skin_3.png');
-        this.load.image('personaje4', 'public/assets/Skins/mascleto_skin_4.png');
-        this.load.image('personaje5', 'public/assets/Skins/mascleto_skin_5.png');
-        this.load.image('personaje6', 'public/assets/Skins/mascleto_skin_6.png');
-        this.load.image('personaje7', 'public/assets/Skins/mascleto_skin_7.png');
-        this.load.image('personaje8', 'public/assets/Skins/mascleto_skin_8.png');
+        this.load.image('niveles', '/assets/fondoniveles720.jpg');
+        this.load.image('personaje0', '/assets/Skins/mascleto.png');
+        this.load.image('personaje1', '/assets/Skins/mascleto_skin_1.png');
+        this.load.image('personaje2', '/assets/Skins/mascleto_skin_2.png');
+        this.load.image('personaje3', '/assets/Skins/mascleto_skin_3.png');
+        this.load.image('personaje4', '/assets/Skins/mascleto_skin_4.png');
+        this.load.image('personaje5', '/assets/Skins/mascleto_skin_5.png');
+        this.load.image('personaje6', '/assets/Skins/mascleto_skin_6.png');
+        this.load.image('personaje7', '/assets/Skins/mascleto_skin_7.png');
+        this.load.image('personaje8', '/assets/Skins/mascleto_skin_8.png');
 
-        this.load.image('back', 'public/assets/botonback.jpg');
+        this.load.image('back', '/assets/botonback.jpg');
 	}
 
 	/**
