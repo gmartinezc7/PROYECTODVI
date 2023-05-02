@@ -51,8 +51,7 @@ export default class game extends Phaser.Scene {
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
-	create(data) {
-        
+	create(data) {        
 
         this.botonPlay = data.botonPlay;
         if(!this.botonPlay){
