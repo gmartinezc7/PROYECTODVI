@@ -13,14 +13,24 @@ export default class escenaFinal extends Phaser.Scene {
 	preload(){
         this.load.image('niveles', 'assets/fondoniveles.jpg');
 		this.load.image('gameOver', 'assets/endgame.png');
-		this.load.image('menu', 'assets/menu.jpg');
-        this.load.image('win', 'assets/you_win.png');
+		this.load.image('menu', 'assets/Boton Menu.png');
+
+		this.load.audio('gameover','assets/GameOver.mp3');
+		this.load.audio('winaudio','assets/Won!.mp3');
+
+        //this.load.image('win', 'assets/you_win.png');
+		this.load.image('restart', 'assets/Boton reiniciar.png');
+		this.load.image('victoria1', 'assets/Dialogo Victoria/Victoria1.png');
+		this.load.image('victoria2', 'assets/Dialogo Victoria/Victoria2.png');
+		this.load.image('victoria3', 'assets/Dialogo Victoria/Victoria3.png');
 		//this.load.image('lose', 'assets/lose.jpg');
 	}
 
 	init(data){
 		this.final = data.numero;
-		//console.log('final: %d',data);
+		this.totalEsferas = data.totalEsferas;
+		this.totalRecogidas = data.totalRecogidas;
+		this.level = data.nivel;
 	}
 
 	/**
@@ -31,17 +41,48 @@ export default class escenaFinal extends Phaser.Scene {
         this.inicio = this.add.image(360, 360, 'niveles')
 
 		if(this.final == 0){
+			this.sound.stopAll();
+			this.GameOversound=this.sound.add('gameover');
+			this.GameOversound.play();
 			this.texto = this.add.image(360, 360, 'gameOver')
 		}else{
-			this.texto = this.add.image(360,360,'win')
+
+			if (this.totalRecogidas >= 0.8*this.totalEsferas){
+				this.add.image(360,300, 'victoria3');
+			}
+			else if(this.totalRecogidas >= 0.4*this.totalEsferas){
+				this.add.image(360,300, 'victoria2');
+			}
+			else{
+				this.add.image(360,300, 'victoria1');
+			}
+			this.sound.stopAll();
+			this.Winsound=this.sound.add('winaudio');
+			this.Winsound.play();
 		}
 
-		//this.texto = this.add.image(360, 360, 'gameOver')
 
 		this.buttonBack = this.add.image(550,660,'menu').setInteractive();
+		this.buttonBack.setScale(0.7);
         this.buttonBack.on('pointerdown', pointer => {
+			this.scene.stop('escenafinal');
             this.scene.start('menuniveles');
+            this.scene.stop();
+            
 	    });
+
+		this.buttonRestart = this.add.image(320, 660, 'restart').setInteractive();
+		this.buttonRestart.setScale(0.7);
+		this.buttonRestart.on('pointerdown', pointer => {
+			this.scene.stop('escenafinal');
+            this.scene.start('game');
+            this.scene.stop();
+            //this.scene.start('game', {nivel: this.level})
+	    });
+
+
+		// HACER UN IF Y DEPENDIENDO DEL SCORE QUE SE RECIBA SE MUESTRA IMAGEN CON
+		// 1 ESTRELLA, 2 O 3
 		
 
         //La escena se queda pausada ya que hemos perdido

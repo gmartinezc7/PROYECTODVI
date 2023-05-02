@@ -1,275 +1,312 @@
 
 import Phaser from 'phaser'
+import Character from './character.js';
+
+
+var cheatActivated = false;
 
 export default class game extends Phaser.Scene {
 
-	constructor(nivel) {
+	constructor() {
 		super({ key:'game'});
         this.fondoJuego = undefined;
         this.valor = 0;
         this.height = 600;
         this.width = 600;
-        
-        //this.nivel = nivel;
-        //this.nivel= this.scene.settings.data;
 	}
-    init() {
+
+    init(data) {
         if(!this.registry.get('selectedCharacter')){
             this.registry.set('selectedCharacter', {image : 'character'})
         }
         this.selectedCharacter = this.registry.get('selectedCharacter');
+        this.nivel = data.nivel;
+        this.score = 0;
+        this.totalEsferas = 0;
+        this.totalRecogidas = 0;
+        this.inicioJuego = false;
+        this.inicioJuego2 = false;
     }
 
 	/**
 	 * Cargamos todos los assets que vamos a necesitar
 	 */
 	preload(){
-        this.load.image('fondo','assets/fondo720.jpg');
-        //this.load.tilemapTiledJSON('tilemap','mapa_lvl1');
+
+        this.load.image('btnPause', 'assets/Boton pausa.png');
         this.load.image('character', 'assets/Skins/mascleto.png');
-        this.load.image('coin1', 'assets/Bolas/bola_de_luz_amarilla.png');
-        this.load.image('coin2', 'assets/Bolas/bola_de_luz_morada.png');
-        this.load.image('coin3', 'assets/Bolas/bola_de_luz_roja.png');
-        this.load.image('coin4', 'assets/Bolas/bola_de_luz_verde.png');
-        this.load.image('platform', 'assets/plataforma.png');
+
+
+        // A PARTIR DE AQUÍ IF PARA CAMBIAR DEPENDIENDO DEL NIVEL
+
+        // AHACER LO DE LOS STRINGS
+        this.cadena = "mapa_lvl" + this.nivel + ".json";
+        this.cadena2 = "Tile" + this.nivel + ".png";
+
+        this.load.tilemapTiledJSON('tilemap', 'assets/Mapas2/' + this.cadena);
+        this.load.image('patronesTilemap', 'assets/Mapas2/' + this.cadena2);
+        this.load.image('plataformax','assets/Mapas2/plataforma' + this.nivel + '.png');
+        this.load.image('estrellaluz','assets/Mapas2/esfera' + this.nivel + '.png');
+        this.load.image('gotaax','assets/enemigo_agua.png');
+        this.load.image('cenizaax','assets/enemigo_ceniza.png');
 	}
 	
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
-	create() {
-        this.score = 0;
-        var espacioPulsado = false;
+	create(data) {
 
-		//Pintamos un fondo y creamos el personaje para pintar un fondo que se mueva lo hacemos con sprite y que se actualice cada vez
-        this.fondoJuego = this.add.tileSprite(360,360,0,0,'fondo')
+        
+
+        this.botonPlay = data.botonPlay;
+        if(!this.botonPlay){
+            this.espacioPulsado = false;
+        }
+        let quitArea = new Phaser.Geom.Rectangle(55, 60, 230, 220);  
+        this.btnPause = this.add.image(670,50,'btnPause').setInteractive(quitArea, Phaser.Geom.Rectangle.Contains);
+        this.btnPause.setScale(0.4);
+        this.btnPause.setScrollFactor(0,0);
+        this.btnPause.setDepth(5);
+
+        this.btnPause.on('pointerdown', () => {
+            this.scene.pause();
+            this.scene.launch('escenaPausada');
+        });
+
+        this.map = this.make.tilemap({ 
+			key: 'tilemap', 
+			tileWidth: 32, 
+			tileHeight: 32 
+		});
+
+        const tileset1 = this.map.addTilesetImage('Tile'+ this.nivel, 'patronesTilemap');
+        
+
+        // creamos las diferentes capas a través del tileset. El nombre de la capa debe aparecer en el .json del tilemap cargado
+        this.wallLayer = this.map.createLayer('Plataformas', tileset1);
+        this.groundLayer = this.map.createLayer('Fondo', tileset1);
+        this.skyLayer = this.map.createLayer('Nubes', tileset1);    
+        this.esferasLayer = this.map.createLayer('Esferas', tileset1);
+        //Si el nivel es el 2 se añade una nueva capa
+        if(this.nivel == 2){
+            this.lateralLayer = this.map.createLayer('Laterales', tileset1);
+        }
 
         //Marcador de puntuación
         this.scoreText = this.add.text(0, 0, 'Score: ' + this.score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
+        this.scoreText.setScrollFactor(0,0);
+        this.scoreText.setDepth(5);
 
         //Se crea el personaje con sus propiedades
-        //this.character = this.physics.add.sprite(360, 650, 'character');
+        this.mov = this.map.createFromObjects('Objetos', {name: 'player', classType: Character, key:this.selectedCharacter.image});
+		this.player = this.mov[0];
+        //this.player.body.position.x;
+        this.player.setScale(0.2);
+
         
-        this.character = this.physics.add.sprite(360, 650, this.selectedCharacter.image);
-        this.character.setScale(0.2); 
-        this.character.body.allowGravity = true;
-        this.character.setCollideWorldBounds(true);
+        
 
-        //Se crean las esferas de luz con sus propiedades
-        this.coin = this.physics.add.group({
-            allowGravity: false
-        });
-        this.platform = this.physics.add.group({
-            allowGravity : false
-        })
-        this.evento = this.time.addEvent({
-            delay: 6000, // tiempo en milisegundos entre cada moneda
-            callback: this.generateCoins,
-            callbackScope: this,
-            loop: true, // para que se repita indefinidamente
-            paused: true
-        });
 
-        this.evento2 = this.time.addEvent({
-            delay: 6000, // tiempo en milisegundos entre cada moneda
-            callback: this.generatePlatforms,
-            callbackScope: this,
-            loop: true, // para que se repita indefinidamente
-            paused: true
-        });
-    
-        //Que el jugador recoga la moneda
-        this.physics.add.overlap(this.character, this.coin, this.collectStar, null, this);
-        this.physics.add.overlap(this.character, this.platform, this.collectPlatform, null, this);
+        //En todos los niveles menos en el primero se incorpora el enemigo 'Gotas'
+        if(this.nivel > 1){
+            this.gotasLayer = this.map.createLayer('Gotas', tileset1);
+            let gotas = this.map.createFromObjects('Gotas', {name: "Gota", key: 'gotaax' });
+		
+            this.gotasGroup = this.add.group();
+            this.gotasGroup.addMultiple(gotas)
+            gotas.forEach(obj => {
+                this.physics.add.existing(obj);
+                obj.body.allowGravity = false;
+                obj.body.immovable = true;
+                //obj.body.gravity.y = 5;
+            });
+            this.physics.add.collider(this.player, this.gotasGroup, this.handlePlayerOnGotaorCeniza, null, this);
 
-        this.physics.world.enable(this.character);
+            //El nivel 4 y 5, además incorporan un nuevo enemigo "Ceniza"
+            if(this.nivel >= 4){
+                if(this.nivel == 4){
+                    this.fuegoLayer = this.map.createLayer('Fuegos', tileset1);
+                }
+                this.estelasLayer = this.map.createLayer('Estelas', tileset1);
+                this.estrellasLayer = this.map.createLayer('Estrellas', tileset1);
+                this.cenizasLayer = this.map.createLayer('Cenizas', tileset1);
+                let cenizas = this.map.createFromObjects('Cenizas', {name: "Ceniza", key: 'cenizaax' });
+            
+                this.cenizasGroup = this.add.group();
+                this.cenizasGroup.addMultiple(cenizas)
+                cenizas.forEach(obj => {
+                    this.physics.add.existing(obj);
+                    obj.body.allowGravity = false;
+                    obj.body.immovable = true;
+                    //obj.body.gravity.y = 5;
+                });
+                this.physics.add.collider(this.player, this.cenizasGroup, this.handlePlayerOnGotaorCeniza, null, this);
+            }
+        }
+
+        //this.physics.world.enable(this.player);
+
+        // Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
+		let plataformas = this.map.createFromObjects('Plataformas', {name: "Plataforma", key: 'plataformax' });
+		
+		this.platGroup = this.add.group();
+		this.platGroup.addMultiple(plataformas)
+		plataformas.forEach(obj => {
+			this.physics.add.existing(obj);
+            obj.body.allowGravity = false;      
+            obj.body.immovable = true;   
+		});
+
+        this.physics.add.collider(this.player, this.platGroup, this.handlePlayerOnPlatform, null, this);
+        this.platGroup.children.iterate(function (plataforma){
+            plataforma.body.checkCollision.up = true;
+            plataforma.body.checkCollision.left = false;
+            plataforma.body.checkCollision.right = false;
+            plataforma.body.checkCollision.down = false;
+            plataforma.body.allowGravity = false;
+        });
+        let esferas = this.map.createFromObjects('Esferas', {name: "Esfera", key: 'estrellaluz' });
+		this.esfGroup = this.add.group();
+		this.esfGroup.addMultiple(esferas)
+		esferas.forEach(obj => {
+			this.physics.add.existing(obj);
+            obj.body.allowGravity = false;      
+            obj.body.immovable = true;
+            this.totalEsferas++;
+		});
+
+        this.physics.add.overlap(this.player, this.esfGroup, this.handlePlayerCollisionEsfera, null, this);
+
+        // Nueva función de seguir al jugador
+        this.cameras.main.setFollowOffset(100,0);
+        this.cameras.main.startFollow(this.player,false,0,1);
 
         //Permitir obtener que teclas ha pulsado
         this.cursors = this.input.keyboard.createCursorKeys();
+
+
+        
+
+        // CREACIÓN DE LA BARRA DE PROGRESO DE JUEGO
+        //Marcador de puntuación
+        //this.progressBar = this.add.text(0, 650, 'Progreso: ' + this.score, {fontFamily: 'Arial', fontSize: '44px', color: '#ffffff'});
+
+        this.progressBox = this.add.graphics();
+        this.progressBox.lineStyle(2,0xffffff,1);
+        this.progressBox.strokeRect(0,710,720,10);        
+        this.progressBox.setScrollFactor(0,0);
+        this.progressBox.setDepth(6);
+
+
+        this.progressBar = this.add.graphics();
+        this.progressBar.fillStyle(0xFF0000,1);
+        this.progressBar.fillRect(0,710,0,0);
+        this.progressBar.setScrollFactor(0,0);
+        this.progressBar.setDepth(7);
+
+
+        this.progreso = 0;
+
 	}
 
     update() {
-        var rotacionIzquierda = false;
-        /*if (this.character.y < 350){
-            this.fondoJuego.tilePositionY -= 4;
-        }*/
-        if (this.character.y < 350){
-            this.fondoJuego.tilePositionY -= 4;
-        }
 
-        //para que las monedas y las plataformas vayan cayendo
-        //this.coin.setVelocityY(200);
-        //this.platform.setVelocityY(200);
+        let actualSpeed;
+        
+        if (this.inicioJuego2 == false){
+            this.mapHeight = this.player.body.position.y;
+        } 
+        this.inicioJuego2 = true;
+        
 
 
-        //this.platform.incY;
-        /*if (this.character.y < 200){
-            this.fondoJuego.tilePositionY -= 4;
+        this.progreso = this.mapHeight - this.player.body.position.y;
+
+        this.updateBarraProgreso();
+
+
+        // CODIGO PARA LIMITES LATERALES
+
+        if (this.player.body.position.x > 660){
+            actualSpeed = -(Math.abs(this.player.body.velocity.x));
+            this.player.body.velocity.x=actualSpeed;
         }
-        if (this.character.y < 180){
-            this.fondoJuego.tilePositionY -= 5;
+
+        if (this.player.body.position.x < -40 ){
+            actualSpeed = Math.abs(this.player.body.velocity.x);
+            this.player.body.velocity.x=actualSpeed;
         }
-        if (this.character.y < 120){
-            this.fondoJuego.tilePositionY -= 6;
-        }
-        if (this.character.y < 100){
-            this.fondoJuego.tilePositionY -= 7;
-        }
-        if (this.character.y < 80){
-            this.fondoJuego.tilePositionY -= 8;
-        }*/
 
         
-        if(this.cursors.space.isDown && !this.espacioPulsado){
-            this.character.setVelocityY(-350);
-            this.espacioPulsado = true;
-            this.character.setCollideWorldBounds(false);
-        }
-        if(this.espacioPulsado){
-            //this.valor += 0.087;
-            //this.fondoJuego.tilePositionY -= 1;
-
-            this.evento.paused = false;
-            this.evento2.paused = false;
-
-            //this.fondoJuego.tilePositionY -= this.nivel.numero;
-
-            if(this.cursors.left.isDown) {
-                rotacionIzquierda = true;
-                if(rotacionIzquierda) {
-                    this.valor += -0.087;
-                }
-                this.character.setVelocityX(-500);
-                //this.character.setRotation(this.valor);
-                this.physics.world.wrap(this.character, 0);
-            }
-            else if(this.cursors.up.isDown){
-                this.character.setVelocityY(-200);
-            }
-            else if (this.cursors.right.isDown) {
-                rotacionIzquierda = false;
-                if(!rotacionIzquierda) {
-                    this.valor += 0.087;
-                }
-                this.character.setVelocityX(500);
-                //this.character.setRotation(this.valor);
-                this.physics.world.wrap(this.character, 50);
-            }
-            else { 
-                if(rotacionIzquierda) {
-                    this.valor += -0.087;
-                }
-                else{
-                    this.valor += 0.087;
-                }
-                //this.character.setRotation(this.valor);
-                this.character.setVelocityX(0);
-            }
-
-            //En el caso de que el jugador haya caído hacia bajo, pierde y da paso a la escena final.
-            //Se reinian los valores por si volvemos a querer jugar al juego
-            if(this.character.y > 1000){
-                this.scene.start('escenaFinal',{numero: 0});
-                //falta resetear todos los valores
-                this.espacioPulsado = false;
-                this.valor = 0;
-            }
-        }
-    }
-
-    //Función que genera monedas aleatoriamente
-    generateCoins(){
-        //Generar monedas aleatoriamente
-        const numCoins = Phaser.Math.Between(1, 2);
-        //const colorCoin = Phaser.Math.Between(1, 4);
-        const coinColors = ['coin1', 'coin2', 'coin3', 'coin4'];
-        for(let i = 0; i < numCoins; i++){
-            const coinX = Phaser.Math.Between(100, 620);
-            const coinY = Phaser.Math.Between(0, 720);
-            const colorIndex = Phaser.Math.Between(0, coinColors.length - 1);
-            const coin = this.coin.create(coinX, coinY, coinColors[colorIndex]);
-            coin.setScale(0.2);
-        }
-
-        /*this.tweens.add({
-            targets: this.coin,
-            alpha: 0.5,
-            duration: 500,
-            ease: 'Power2',
-            yoyo: true,
-            repeat: -1
-        });*/
-        //Generar monedas cerca unas de otras
-        /*for(let i = 0; i < numCoins; i++){
-            // Si no hay monedas en el juego, genera la primera moneda en una posición aleatoria
-            if (this.coin.getLength() === 0) {
-                const coinX = Phaser.Math.Between(0, 1024);
-                const coinY = Phaser.Math.Between(0, 1024);
-                const coin = this.coin.create(coinX, coinY, 'coin');
-                coin.setScale(0.2);
-                this.coinPosition = new Phaser.Math.Vector2(coinX, coinY);
-                return;
-            }
+        if (this.player.body.position.y > this.alturalimite+300 && this.inicioJuego){
             
-            // Genera una nueva moneda cerca de la posición anterior
-            const coinX = Phaser.Math.Between(this.coinPosition.x - 110, this.coinPosition.x + 110);
-            const coinY = Phaser.Math.Between(this.coinPosition.y - 110, this.coinPosition.y + 110);
-            const coin = this.coin.create(coinX, coinY, 'coin');
-            coin.setScale(0.2);
-            this.coinPosition = new Phaser.Math.Vector2(coinX, coinY);
-        }*/
+            this.scene.start('escenaFinal',{numero : 0});
+            //this.resetGame();
+
+        }
+        // CONDICION DE FIN DE JUEGO : DERROTA
+        
+        if (this.player.body.position.y < 300){
+            this.cameras.main.stopFollow();
+        }
+        if(this.nivel >= 4){
+            if(this.player.body.position.y > 21128){
+                this.cameras.main.stopFollow();
+                this.scene.start('escenaFinal',{numero : 0});
+            }
+        }
+        else{
+            if(this.player.body.position.y > 14000){
+                this.cameras.main.stopFollow();
+                this.scene.start('escenaFinal',{numero : 0}); 
+            }
+        }
+        if (this.player.body.position.y < 100){
+            this.scene.start('escenaFinal',{numero : 1, totalEsferas: this.totalEsferas, totalRecogidas: this.totalRecogidas}); 
+        }
+
+
     }
 
-    collectStar(character, coin){
-        coin.disableBody(true, true);
-        this.score += 100; 
+    handlePlayerOnPlatform(player, platform) {
+        this.alturalimite = this.player.body.position.y;
+        this.inicioJuego = true;
+        const playerBottom = player.body.y + player.body.height;
+        const platformTop = platform.body.y;
+
+        if (playerBottom <= platformTop + 5) { // el jugador está encima de la plataforma
+          player.body.velocity.y = player.playerGetSpeed(); // impulsa al jugador hacia arriba
+        }
+    }
+    
+    handlePlayerCollisionEsfera(player, esfera){
+        this.score += 100;
         this.scoreText.setText('Score: ' + this.score);
-        this.character.setVelocityY(-350);
-        if(this.score == 400){
-            this.scene.start('escenaFinal',{numero : 1}); 
-            this.espacioPulsado = false;
-            this.valor = 0;     
+        esfera.body.visible = false;
+        esfera.destroy();
+        this.totalRecogidas++;   
+    }
+
+    handlePlayerOnGotaorCeniza(player, gota) {
+        if (player.playerCheat() == false){
+            this.scene.start('escenaFinal',{numero : 0}); 
         }
+        
     }
 
-    collectPlatform (character, platform){
-        this.character.setVelocityY(-350);        
-    }
-
-    generatePlatforms(){
-        //Generar monedas aleatoriamente
-        const numPlatfs= Phaser.Math.Between(1, 2);
-        //const colorCoin = Phaser.Math.Between(1, 4);
-        const platformText = 'platform';
-        for(let i = 0; i < numPlatfs; i++){
-            const platX = Phaser.Math.Between(100, 620);
-            const platY = Phaser.Math.Between(0, 720);
-            const platform = this.platform.create(platX, platY, platformText);
-            platform.setScale(0.5);
-        }
-    }
-
-    /*generatePlatforms (platformCount){
-        platformGap = Math.round(this.height/platformCount);
-
-        for (let i = 0; i < platformCount; i++){
-            //para no crearlas en el medio hacemos uno para las plataformas de la derecha
-            //y otro para las plataformas de la izquierda
-            let xpos = 0;
-            do {
-                xpos = this.randomInteger(25, this.width - 25 -100);
-            } while (xpos > this.width / 2 - 100*1.5 && xpos < this.width/2 + 100/2);
-            let y = (this.height/1.5) - i*platformGap;
-            //this.platforms.push(new platformCount(xpos,y));
-            const platformTexture = 'plataforma';
-            const platform = this.platform.create(xpos, y, platformTexture);
-        }
+    updateBarraProgreso() {
+        this.progressBar.clear();
+        this.progressBar.fillStyle(0xFF0000,1);
+        this.progressBar.fillRect(0,710,this.progreso/(this.mapHeight/740),10);
 
     }
 
-    randomInteger (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }*/
+    resetGame(player){
+        player.cheatActivated = false;
+
+    }
 
     
+
+
 }
