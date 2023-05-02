@@ -33,8 +33,8 @@ export default class game extends Phaser.Scene {
 	 */
 	preload(){
 
-        this.load.image('btnPause', 'assets/Boton pausa.png');
-        this.load.image('character', 'assets/Skins/mascleto.png');
+        this.load.image('btnPause', 'public/assets/Boton pausa.png');
+        this.load.image('character', 'public/assets/Skins/mascleto.png');
 
 
         // A PARTIR DE AQUÍ IF PARA CAMBIAR DEPENDIENDO DEL NIVEL
@@ -43,12 +43,12 @@ export default class game extends Phaser.Scene {
         this.cadena = "mapa_lvl" + this.nivel + ".json";
         this.cadena2 = "Tile" + this.nivel + ".png";
 
-        this.load.tilemapTiledJSON('tilemap', 'assets/Mapas2/' + this.cadena);
-        this.load.image('patronesTilemap', 'assets/Mapas2/' + this.cadena2);
-        this.load.image('plataformax','assets/Mapas2/plataforma' + this.nivel + '.png');
-        this.load.image('estrellaluz','assets/Mapas2/esfera' + this.nivel + '.png');
-        this.load.image('gotaax','assets/enemigo_agua.png');
-        this.load.image('cenizaax','assets/enemigo_ceniza.png');
+        this.load.tilemapTiledJSON('tilemap', 'public/assets/Mapas2/' + this.cadena);
+        this.load.image('patronesTilemap', 'public/assets/Mapas2/' + this.cadena2);
+        this.load.image('plataformax','public/assets/Mapas2/plataforma' + this.nivel + '.png');
+        this.load.image('estrellaluz','public/assets/Mapas2/esfera' + this.nivel + '.png');
+        this.load.image('gotaax','public/assets/enemigo_agua.png');
+        this.load.image('cenizaax','public/assets/enemigo_ceniza.png');
 	}
 	
 	/**
