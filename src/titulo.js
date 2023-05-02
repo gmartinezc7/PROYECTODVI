@@ -24,7 +24,9 @@ export default class titulo extends Phaser.Scene {
 	*/
 	create() {
 		//Pintamos un fondo
-        this.inicio = this.add.image(360, 360, 'inicio')
+        this.inicio = this.add.image(360, 360, 'inicio');
+
+		this.sound.stopAll();
 		
 
 		//Añadimos el botón de start
