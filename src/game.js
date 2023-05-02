@@ -2,9 +2,6 @@
 import Phaser from 'phaser'
 import Character from './character.js';
 
-
-var cheatActivated = false;
-
 export default class game extends Phaser.Scene {
 
 	constructor() {
@@ -13,6 +10,7 @@ export default class game extends Phaser.Scene {
         this.valor = 0;
         this.height = 600;
         this.width = 600;
+        this.restart = false;
 	}
 
     init(data) {
@@ -55,7 +53,6 @@ export default class game extends Phaser.Scene {
 	* Creación de los elementos de la escena principal de juego
 	*/
 	create(data) {
-
         
 
         this.botonPlay = data.botonPlay;

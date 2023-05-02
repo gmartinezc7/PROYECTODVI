@@ -53,6 +53,10 @@ export default class escenaPausada extends Phaser.Scene {
         this.btnQuit.setScrollFactor(0,0);
         this.btnQuit.setDepth(5);
 
+
+
+
+        // BOTON RESUME Y RESTART FUNCIONAN
         this.btnPlay.on('pointerdown', () =>{
                 this.botonPlay = true;
                 this.scene.resume('game');
@@ -65,10 +69,12 @@ export default class escenaPausada extends Phaser.Scene {
             this.scene.start('game');
             this.scene.stop();
         });
+
+        // BOTON QUIT NO FUNCIONA
         this.btnQuit.on('pointerdown', () => {
             this.botonPlay = false;
             this.scene.stop('game'); 
-            this.scene.start('titulo');
+            this.scene.start('menuniveles',{restart: true});
             this.scene.stop();
         });
     }
