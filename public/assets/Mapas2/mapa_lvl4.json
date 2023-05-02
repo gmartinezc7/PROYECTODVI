@@ -305,11 +305,7 @@
             72, 72, 72, 72, 72, 72, 72, 72, 72, 72],
          "height":300,
          "id":2,
-<<<<<<< HEAD:public/assets/Mapas2/mapa_lvl4.json
          "name":"Fondo",
-=======
-         "name":"Fondo Azul",
->>>>>>> 1e7ba7110718c97d58b1baa5ce1314ac44cc19cf:assets/Mapas2/mapa_lvl4.json
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -4953,7 +4949,6 @@
          "visible":true,
          "x":0,
          "y":0
-<<<<<<< HEAD:public/assets/Mapas2/mapa_lvl4.json
         },
         {
               "draworder":"topdown",
@@ -4977,9 +4972,6 @@
               "x":0,
               "y":0
              }],
-=======
-        }],
->>>>>>> 1e7ba7110718c97d58b1baa5ce1314ac44cc19cf:assets/Mapas2/mapa_lvl4.json
  "nextlayerid":10,
  "nextobjectid":338,
  "orientation":"orthogonal",
