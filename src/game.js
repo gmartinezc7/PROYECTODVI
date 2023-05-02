@@ -1,4 +1,4 @@
-//import Phaser from 'phaser'
+import Phaser from 'phaser'
 import Character from './character.js';
 
 export default class game extends Phaser.Scene {

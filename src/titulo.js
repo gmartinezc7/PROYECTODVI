@@ -1,5 +1,5 @@
 
-//import Phaser from 'phaser'
+import Phaser from 'phaser'
 
 export default class titulo extends Phaser.Scene {
 	
@@ -12,7 +12,7 @@ export default class titulo extends Phaser.Scene {
 	 */
 	preload(){
         
-        //this.load.image('sky', 'https://labs.phaser.io/public/assets/skies/space3.png');
+        this.load.image('sky', 'https://labs.phaser.io/public/assets/skies/space3.png');
 		this.load.image('inicio', 'public/assets/inicio720.jpg')
 		this.load.image('start', 'public/assets/start2.jpg');
 		this.load.image('start', 'public/assets/mascleto.png');
