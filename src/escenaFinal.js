@@ -62,6 +62,10 @@ export default class escenaFinal extends Phaser.Scene {
 		}
 
 
+
+
+
+		// BOTON MENU NO REINICIA BIEN LA ESCENA
 		this.buttonBack = this.add.image(550,660,'menu').setInteractive();
 		this.buttonBack.setScale(0.7);
         this.buttonBack.on('pointerdown', pointer => {
