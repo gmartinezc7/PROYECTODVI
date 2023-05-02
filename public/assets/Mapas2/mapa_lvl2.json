@@ -2218,7 +2218,11 @@
                 {
                  "height":72,
                  "id":248,
+<<<<<<< HEAD:public/assets/Mapas2/mapa_lvl2.json
                  "name":"Gota",
+=======
+                 "name":"Esfera",
+>>>>>>> 1e7ba7110718c97d58b1baa5ce1314ac44cc19cf:assets/Mapas2/mapa_lvl2.json
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2229,7 +2233,11 @@
                 {
                  "height":72,
                  "id":249,
+<<<<<<< HEAD:public/assets/Mapas2/mapa_lvl2.json
                  "name":"Gota",
+=======
+                 "name":"Esfera",
+>>>>>>> 1e7ba7110718c97d58b1baa5ce1314ac44cc19cf:assets/Mapas2/mapa_lvl2.json
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2441,6 +2449,7 @@
          "visible":true,
          "x":0,
          "y":0
+<<<<<<< HEAD:public/assets/Mapas2/mapa_lvl2.json
         },
         {
               "draworder":"topdown",
@@ -2465,6 +2474,9 @@
               "y":0
              }],
 
+=======
+        }],
+>>>>>>> 1e7ba7110718c97d58b1baa5ce1314ac44cc19cf:assets/Mapas2/mapa_lvl2.json
  "nextlayerid":11,
  "nextobjectid":268,
  "orientation":"orthogonal",
