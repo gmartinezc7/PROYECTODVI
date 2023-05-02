@@ -42,15 +42,15 @@ export default class tienda extends Phaser.Scene {
         }).setOrigin(0.5);
 
         this.characters = [
-            { name: 'Personaje 0', description: 'Descripción del personaje 0', image: 'personaje0', unlocked: true,  requiredLevel: 0},
-            { name: 'Personaje 1', description: 'Descripción del personaje 1', image: 'personaje1', unlocked: true,  requiredLevel: 0},
-            { name: 'Personaje 2', description: 'Descripción del personaje 2', image: 'personaje2', locked: true, requiredLevel: 1},
-            { name: 'Personaje 3', description: 'Descripción del personaje 3', image: 'personaje3', locked: true, requiredLevel: 2},
-            { name: 'Personaje 4', description: 'Descripción del personaje 4', image: 'personaje4', locked: true, requiredLevel: 3},
-            { name: 'Personaje 5', description: 'Descripción del personaje 5', image: 'personaje5', locked: true, requiredLevel: 3},
-            { name: 'Personaje 6', description: 'Descripción del personaje 6', image: 'personaje6', locked: true, requiredLevel: 3},
-            { name: 'Personaje 7', description: 'Descripción del personaje 7', image: 'personaje7', locked: true, requiredLevel: 3},
-            { name: 'Personaje 8', description: 'Descripción del personaje 8', image: 'personaje8', locked: true, requiredLevel: 3}
+            { name: 'Personaje 0', description: 'Descripción del personaje 0', image: 'personaje0', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 1', description: 'Descripción del personaje 1', image: 'personaje1', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 2', description: 'Descripción del personaje 2', image: 'personaje2', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 3', description: 'Descripción del personaje 3', image: 'personaje3', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 4', description: 'Descripción del personaje 4', image: 'personaje4', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 5', description: 'Descripción del personaje 5', image: 'personaje5', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 6', description: 'Descripción del personaje 6', image: 'personaje6', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 7', description: 'Descripción del personaje 7', image: 'personaje7', unlocked: true, requiredLevel: 0},
+            { name: 'Personaje 8', description: 'Descripción del personaje 8', image: 'personaje8', unlocked: true, requiredLevel: 0}
           ];
 
           // this.registry.set('selectedCharacter', this.characters[0]);
