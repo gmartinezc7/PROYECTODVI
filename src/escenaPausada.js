@@ -9,10 +9,10 @@ export default class escenaPausada extends Phaser.Scene {
 
     preload(){
         
-        this.load.image('btnPlay', '/assets/Boton reanudar.png');
-        this.load.image('btnRestart', '/assets/Boton reiniciar.png');
-        this.load.image('btnQuit', '/assets/Boton salir.png');
-        this.load.image('dialogo', '/assets/dialogo menu.png');
+        this.load.image('btnPlay', 'public/assets/Boton reanudar.png');
+        this.load.image('btnRestart', 'public/assets/Boton reiniciar.png');
+        this.load.image('btnQuit', 'public/assets/Boton salir.png');
+        this.load.image('dialogo', 'public/assets/dialogo menu.png');
     }
 
     init(data){
