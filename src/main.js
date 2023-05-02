@@ -1,4 +1,4 @@
-import Phaser from '../node_modules/phaser'
+import Phaser from 'phaser'
 import titulo from './titulo.js'
 import game from './game.js'
 import menuniveles from './menuniveles.js'
