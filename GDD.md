@@ -45,7 +45,7 @@ La condición para superar el nivel es llegar a un altura establecida. Si el per
 El jugador tendrá a su disposición varios controles para el personaje jugable:
 
 - Teclas izquierda y derecha controlan la dirección del personaje en la pantalla.
-- El botón de espacio permite al personaje saltar hacia arriba
+- El botón de espacio permite al personaje saltar hacia arriba al comienzo del juego.
 
 Los controles y sus explicaciones serán visibles en la página web dónde está alojado el juego.
 
@@ -57,11 +57,11 @@ Las esferas de luz llevarán el conteo de la puntuación que consigue el jugador
 
 #### Plataformas
 
-Las plataformas sirven como apoyo al personaje jugable. Si este se posiciona sobre ellas, no caerá hacia abajo. Es posible para el jugador mover al personaje a la izquierda y a la derecha encima de la plataforma. Para salir de la plataforma, el jugador deberá saltar o sobrepasar el límite lateral de la plataforma. 
+Las plataformas sirven como apoyo al personaje jugable. Si este se posiciona sobre ellas, no caerá hacia abajo. ~Es posible para el jugador mover al personaje a la izquierda y a la derecha encima de la plataforma. Para salir de la plataforma, el jugador deberá saltar o sobrepasar el límite lateral de la plataforma.~
 
 Las plataformas son accesibles por su parte inferior, es decir, si el personaje colisiona con ellas por debajo, el personaje las atravesará. Si el jugador colisiona con ellas por arriba pararán su caída.
 
-Las plataformas podrán variar en longitud y también es posible que algunas se muevan de izquierda a derecha.
+Las plataformas podrán variar en longitud ~y también es posible que algunas se muevan de izquierda a derecha.~
 
 #### Enemigos
 
