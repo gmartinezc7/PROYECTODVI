@@ -45,7 +45,7 @@ La condición para superar el nivel es llegar a un altura establecida. Si el per
 El jugador tendrá a su disposición varios controles para el personaje jugable:
 
 - Teclas izquierda y derecha controlan la dirección del personaje en la pantalla.
-- ~El botón de espacio permite al personaje saltar hacia arriba~
+- El botón de espacio permite al personaje saltar hacia arriba al comienzo del juego.
 
 Los controles y sus explicaciones serán visibles en la página web dónde está alojado el juego.
 
