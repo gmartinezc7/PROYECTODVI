@@ -22,7 +22,7 @@ export default class tienda extends Phaser.Scene {
         this.load.image('personaje7', 'public/assets/Skins/mascleto_skin_7.png');
         this.load.image('personaje8', 'public/assets/Skins/mascleto_skin_8.png');
 
-        this.load.image('back', 'public/assets/botonback.jpg');
+        this.load.image('back', 'public/assets/Botones/botonback.jpg');
 	}
 
 	/**

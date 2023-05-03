@@ -13,13 +13,13 @@ export default class escenaFinal extends Phaser.Scene {
 	preload(){
         this.load.image('niveles', 'public/assets/fondoniveles.jpg');
 		this.load.image('gameOver', 'public/assets/endgame.png');
-		this.load.image('menu', 'public/assets/Boton Menu.png');
+		this.load.image('menu', 'public/assets/Botones/Boton Menu.png');
 
-		this.load.audio('gameover','public/assets/GameOver.mp3');
-		this.load.audio('winaudio','public/assets/Won!.mp3');
+		this.load.audio('gameover','public/assets/Sonidos/GameOver.mp3');
+		this.load.audio('winaudio','public/assets/Sonidos/Won!.mp3');
 
         //this.load.image('win', 'public/assets/you_win.png');
-		this.load.image('restart', 'public/assets/Boton reiniciar.png');
+		this.load.image('restart', 'public/assets/Botones/Boton reiniciar.png');
 		this.load.image('victoria1', 'public/assets/Dialogo Victoria/Victoria1.png');
 		this.load.image('victoria2', 'public/assets/Dialogo Victoria/Victoria2.png');
 		this.load.image('victoria3', 'public/assets/Dialogo Victoria/Victoria3.png');
