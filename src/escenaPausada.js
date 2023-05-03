@@ -30,10 +30,11 @@ export default class escenaPausada extends Phaser.Scene {
         this.characterName.setScrollFactor(0,0);
         this.characterName.setDepth(5);
 
-
+        
         let playArea = new Phaser.Geom.Rectangle(75, 130, 300, 140);
         let restartArea = new Phaser.Geom.Rectangle(75, 130, 300, 140);
-        let quitArea = new Phaser.Geom.Rectangle(75, 130, 300, 140);    
+        let quitArea = new Phaser.Geom.Rectangle(75, 130, 300, 140);
+
 
         this.btnPlay = this.add.image(360,300,'btnPlay').setInteractive(playArea, Phaser.Geom.Rectangle.Contains);
         this.btnPlay.setScale(0.7);
@@ -52,7 +53,6 @@ export default class escenaPausada extends Phaser.Scene {
 
         this.btnQuit.setScrollFactor(0,0);
         this.btnQuit.setDepth(5);
-
 
 
 

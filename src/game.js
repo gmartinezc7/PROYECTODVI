@@ -40,10 +40,10 @@ export default class game extends Phaser.Scene {
         this.cadena = "mapa_lvl" + this.nivel + ".json";
         this.cadena2 = "Tile" + this.nivel + ".png";
 
-        this.load.tilemapTiledJSON('tilemap', 'public/assets/Mapas2/' + this.cadena);
-        this.load.image('patronesTilemap', 'public/assets/Mapas2/' + this.cadena2);
-        this.load.image('plataformax','public/assets/Mapas2/plataforma' + this.nivel + '.png');
-        this.load.image('estrellaluz','public/assets/Mapas2/esfera' + this.nivel + '.png');
+        this.load.tilemapTiledJSON('tilemap', 'public/assets/Mapas/' + this.cadena);
+        this.load.image('patronesTilemap', 'public/assets/Mapas/' + this.cadena2);
+        this.load.image('plataformax','public/assets/Mapas/plataforma' + this.nivel + '.png');
+        this.load.image('estrellaluz','public/assets/Mapas/esfera' + this.nivel + '.png');
         this.load.image('gotaax','public/assets/enemigo_agua.png');
         this.load.image('cenizaax','public/assets/enemigo_ceniza.png');
 	}
