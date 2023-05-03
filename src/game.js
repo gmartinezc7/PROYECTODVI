@@ -93,7 +93,7 @@ export default class game extends Phaser.Scene {
         }
 
         //Marcador de puntuación
-        this.scoreText = this.add.text(0, 0, 'Score: ' + this.score, {fontFamily: 'Arial', fontSize: '44px', color: '#000000'});
+        this.scoreText = this.add.text(0, 0, 'Score: ' + this.score, {fontFamily: 'Arial', fontSize: '44px', color: '#FFFF00'});
         this.scoreText.setScrollFactor(0,0);
         this.scoreText.setDepth(5);
 
