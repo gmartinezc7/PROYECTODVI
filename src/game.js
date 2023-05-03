@@ -30,7 +30,7 @@ export default class game extends Phaser.Scene {
 	 */
 	preload(){
 
-        this.load.image('btnPause', 'public/assets/Botones/Boton pausa.png');
+        this.load.image('btnPause', 'assets/Botones/Boton pausa.png');
         this.load.image('character', 'public/assets/Skins/mascleto.png');
 
 
