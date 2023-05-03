@@ -73,9 +73,7 @@ export default class escenaPausada extends Phaser.Scene {
         // BOTON QUIT NO FUNCIONA
         this.btnQuit.on('pointerdown', () => {
             this.botonPlay = false;
-            this.scene.stop('game'); 
-            this.scene.start('menuniveles');
-            this.scene.stop();
+            window.location.reload();
         });
     }
 

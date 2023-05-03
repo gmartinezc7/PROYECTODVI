@@ -33,14 +33,14 @@ export default class titulo extends Phaser.Scene {
 		this.start = this.add.image(200, 500, 'start').setInteractive();
 		this.start.setScale(0.6);
 
-		//const sound = this.sound.add('music', { loop: true, volume: 0.5 });
-		//sound.play();
+		const sound = this.sound.add('music', { loop: true, volume: 0.5 });
+		sound.play();
 
 
 		this.input.mouse.disableContextMenu();
-		/*this.input.on('pointermove', (pointer) => {
+		this.input.on('pointermove', (pointer) => {
 			sound.resume();
-		});*/
+		});
 		
 		this.scene.stop('game');
 		// Escuchamos los eventos del ratón cuando interactual con nuestro sprite de "Start"

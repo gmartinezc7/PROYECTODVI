@@ -51,7 +51,11 @@ export default class game extends Phaser.Scene {
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
-	create(data) {        
+	create(data) {
+        
+        //if (this.restart == true){
+           //this.activate();
+        //}else this.restart = true;
 
         this.botonPlay = data.botonPlay;
         if(!this.botonPlay){
@@ -206,6 +210,7 @@ export default class game extends Phaser.Scene {
 	}
 
     update() {
+        
 
         let actualSpeed;
         
@@ -263,6 +268,14 @@ export default class game extends Phaser.Scene {
 
 
     }
+
+    activate(){
+        const scene = this.scene.get('game');
+        this.scene.restart(scene);
+        this.scene.start('game');
+    }
+
+    
 
     handlePlayerOnPlatform(player, platform) {
         this.alturalimite = this.player.body.position.y;
