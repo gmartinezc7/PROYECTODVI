@@ -1,9 +1,5 @@
 body {
-<<<<<<< Updated upstream
-	background-image: url('./assets/fondofinal.jpg');
-=======
 	background-image: url('public/assets/fondofinal.jpg');
->>>>>>> Stashed changes
 	background-repeat: repeat;
 	background-size: 100%;
 	margin: 0px;

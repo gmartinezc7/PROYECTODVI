@@ -12,16 +12,6 @@ export default class menuniveles extends Phaser.Scene {
 	 */
 	preload(){
         
-<<<<<<< Updated upstream
-        this.load.image('niveles', './assets/fondoniveles720.jpg');
-		this.load.image('skins', './assets/Botones/boton skins.png');
-		this.load.image('nivel1', './assets/niveles/nivel1.png');
-		this.load.image('nivel2', './assets/niveles/nivel2.png');
-		this.load.image('nivel3', './assets/niveles/nivel3.png');
-		this.load.image('nivel4', './assets/niveles/nivel4.png');
-		this.load.image('nivel5', './assets/niveles/nivel5.png');
-        this.load.image('back', './assets/Botones/botonback.jpg');
-=======
         this.load.image('niveles', 'public/assets/fondoniveles720.jpg');
 		this.load.image('skins', 'public/assets/Botones/boton skins.png');
 		this.load.image('nivel1', 'public/assets/niveles/nivel1.png');
@@ -30,7 +20,6 @@ export default class menuniveles extends Phaser.Scene {
 		this.load.image('nivel4', 'public/assets/niveles/nivel4.png');
 		this.load.image('nivel5', 'public/assets/niveles/nivel5.png');
         this.load.image('back', 'public/assets/Botones/botonback.jpg');
->>>>>>> Stashed changes
 	}
 
 	/**
