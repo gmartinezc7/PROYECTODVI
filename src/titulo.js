@@ -12,11 +12,11 @@ export default class titulo extends Phaser.Scene {
 	 */
 	preload(){
         
-        this.load.image('sky', 'https://labs.phaser.io/./assets/skies/space3.png');
-		this.load.image('inicio', './assets/inicio720.jpg')
-		this.load.image('start', './assets/Botones/start.png');
-		this.load.image('start', './assets/mascleto.png');
-		this.load.audio('music', './assets/Sonidos/music.mp3');
+        this.load.image('sky', 'https://labs.phaser.io/public/assets/skies/space3.png');
+		this.load.image('inicio', 'public/assets/inicio720.jpg')
+		this.load.image('start', 'public/assets/Botones/start.png');
+		this.load.image('start', 'public/assets/mascleto.png');
+		this.load.audio('music', 'public/assets/Sonidos/music.mp3');
 	}
 
 	/**

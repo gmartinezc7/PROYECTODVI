@@ -11,19 +11,19 @@ export default class escenaFinal extends Phaser.Scene {
 	 * Cargamos todos los assets que vamos a necesitar
 	 */
 	preload(){
-        this.load.image('niveles', './assets/fondoniveles.jpg');
-		this.load.image('gameOver', './assets/endgame.png');
-		this.load.image('menu', './assets/Botones/Boton Menu.png');
+        this.load.image('niveles', 'public/assets/fondoniveles.jpg');
+		this.load.image('gameOver', 'public/assets/endgame.png');
+		this.load.image('menu', 'public/assets/Botones/Boton Menu.png');
 
-		this.load.audio('gameover','./assets/Sonidos/GameOver.mp3');
-		this.load.audio('winaudio','./assets/Sonidos/Won!.mp3');
+		this.load.audio('gameover','public/assets/Sonidos/GameOver.mp3');
+		this.load.audio('winaudio','public/assets/Sonidos/Won!.mp3');
 
-        //this.load.image('win', './assets/you_win.png');
-		this.load.image('restart', './assets/Botones/Boton reiniciar.png');
-		this.load.image('victoria1', './assets/Dialogo Victoria/Victoria1.png');
-		this.load.image('victoria2', './assets/Dialogo Victoria/Victoria2.png');
-		this.load.image('victoria3', './assets/Dialogo Victoria/Victoria3.png');
-		//this.load.image('lose', './assets/lose.jpg');
+        //this.load.image('win', 'public/assets/you_win.png');
+		this.load.image('restart', 'public/assets/Botones/Boton reiniciar.png');
+		this.load.image('victoria1', 'public/assets/Dialogo Victoria/Victoria1.png');
+		this.load.image('victoria2', 'public/assets/Dialogo Victoria/Victoria2.png');
+		this.load.image('victoria3', 'public/assets/Dialogo Victoria/Victoria3.png');
+		//this.load.image('lose', 'public/assets/lose.jpg');
 	}
 
 	init(data){
