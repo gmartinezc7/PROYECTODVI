@@ -11,6 +11,7 @@ export default class escenaFinal extends Phaser.Scene {
 	 * Cargamos todos los assets que vamos a necesitar
 	 */
 	preload(){
+<<<<<<< Updated upstream
         this.load.image('niveles', './assets/fondoniveles.jpg');
 		this.load.image('gameOver', './assets/endgame.png');
 		this.load.image('menu', './assets/Botones/Boton Menu.png');
@@ -24,6 +25,21 @@ export default class escenaFinal extends Phaser.Scene {
 		this.load.image('victoria2', './assets/Dialogo Victoria/Victoria2.png');
 		this.load.image('victoria3', './assets/Dialogo Victoria/Victoria3.png');
 		//this.load.image('lose', './assets/lose.jpg');
+=======
+        this.load.image('niveles', 'public/assets/fondoniveles.jpg');
+		this.load.image('gameOver', 'public/assets/endgame.png');
+		this.load.image('menu', 'public/assets/Botones/Boton Menu.png');
+
+		this.load.audio('gameover','public/assets/Sonidos/GameOver.mp3');
+		this.load.audio('winaudio','public/assets/Sonidos/Won!.mp3');
+
+        //this.load.image('win', 'public/assets/you_win.png');
+		this.load.image('restart', 'public/assets/Botones/Boton reiniciar.png');
+		this.load.image('victoria1', 'public/assets/Dialogo Victoria/Victoria1.png');
+		this.load.image('victoria2', 'public/assets/Dialogo Victoria/Victoria2.png');
+		this.load.image('victoria3', 'public/assets/Dialogo Victoria/Victoria3.png');
+		//this.load.image('lose', 'public/assets/lose.jpg');
+>>>>>>> Stashed changes
 	}
 
 	init(data){
@@ -65,7 +81,11 @@ export default class escenaFinal extends Phaser.Scene {
 
 
 
+<<<<<<< Updated upstream
 		// BOTON MENU 
+=======
+		// BOTON MENU NO REINICIA BIEN LA ESCENA
+>>>>>>> Stashed changes
 		this.buttonBack = this.add.image(550,660,'menu').setInteractive();
 		this.buttonBack.setScale(0.7);
         this.buttonBack.on('pointerdown', pointer => {
@@ -75,14 +95,31 @@ export default class escenaFinal extends Phaser.Scene {
 
 
 
+<<<<<<< Updated upstream
 		// BOTON RESTART
+=======
+		// BOTON RESTART FUNCIONA
+>>>>>>> Stashed changes
 		this.buttonRestart = this.add.image(320, 660, 'restart').setInteractive();
 		this.buttonRestart.setScale(0.7);
 		this.buttonRestart.on('pointerdown', pointer => {
 			this.scene.stop('escenafinal');
             this.scene.start('game');
             this.scene.stop();
+<<<<<<< Updated upstream
 	    });
+=======
+            //this.scene.start('game', {nivel: this.level})
+	    });
+
+
+		// HACER UN IF Y DEPENDIENDO DEL SCORE QUE SE RECIBA SE MUESTRA IMAGEN CON
+		// 1 ESTRELLA, 2 O 3
+		
+
+        //La escena se queda pausada ya que hemos perdido
+		//this.scene.pause();
+>>>>>>> Stashed changes
 	}
 
 	update(){

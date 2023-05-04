@@ -74,8 +74,11 @@ export default class Character extends Phaser.GameObjects.Sprite {
 			this.inicio = false;
 		}
 
+<<<<<<< Updated upstream
 		// Si pulsamos la letra C se activan los cheats
 
+=======
+>>>>>>> Stashed changes
 		if(this.cheatKey.isDown){
 			this.body.setVelocityY(-2000);
 			this.cheatActivated = true;
