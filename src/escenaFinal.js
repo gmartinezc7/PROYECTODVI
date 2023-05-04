@@ -31,6 +31,7 @@ export default class escenaFinal extends Phaser.Scene {
 		this.totalEsferas = data.totalEsferas;
 		this.totalRecogidas = data.totalRecogidas;
 		this.level = data.nivel;
+		this.scoreFinal = data.puntuacion;
 	}
 
 	/**
@@ -56,6 +57,19 @@ export default class escenaFinal extends Phaser.Scene {
 			else{
 				this.add.image(360,300, 'victoria1');
 			}
+
+
+
+			this.scoreText2 = this.add.text(200, 410, 'Score: ' + this.scoreFinal, {fontFamily: 'Arial', fontSize: '55px', fontStyle: 'bold', color: '#F1A63F'});
+			this.scoreText2.style.fontStyle.bold();
+			this.scoreText2.setScrollFactor(0,0);
+			this.scoreText2.setDepth(5);
+
+
+
+
+
+			
 			this.sound.stopAll();
 			this.Winsound=this.sound.add('winaudio');
 			this.Winsound.play();

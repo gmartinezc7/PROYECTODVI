@@ -22,7 +22,7 @@ export default class game extends Phaser.Scene {
         this.totalEsferas = 0;
         this.totalRecogidas = 0;
         this.inicioJuego = false;
-        this.inicioJuego2 = false;
+        this.inicioJuego2 = false; // variable de inicio para barra de progreso
     }
 
 	/**
@@ -185,6 +185,10 @@ export default class game extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
 
+        // Texto de tutorial de inicio de juego
+        this.startText = this.add.text(250, 600, 'Press ↑ to Start', {fontFamily: 'Arial', fontSize: '33px', color: '#FFFFFF'});
+        this.startText.setScrollFactor(0,0);
+        this.startText.setDepth(5);
         
 
         // CREACIÓN DE LA BARRA DE PROGRESO DE JUEGO
@@ -214,10 +218,18 @@ export default class game extends Phaser.Scene {
 
         let actualSpeed;
         
+
+        // Este if nos sirve para conseguir la altura del mapa, que luego utilizaremos para implementar la barra de progreso
         if (this.inicioJuego2 == false){
             this.mapHeight = this.player.body.position.y;
         } 
         this.inicioJuego2 = true;
+        
+
+        if (this.player.body.position.y != this.mapHeight){
+            this.startText.destroy();
+
+        }
         
 
 
@@ -228,12 +240,12 @@ export default class game extends Phaser.Scene {
 
         // CODIGO PARA LIMITES LATERALES
 
-        if (this.player.body.position.x > 660){
+        if (this.player.body.position.x > 690){
             actualSpeed = -(Math.abs(this.player.body.velocity.x));
             this.player.body.velocity.x=actualSpeed;
         }
 
-        if (this.player.body.position.x < -40 ){
+        if (this.player.body.position.x < -10 ){
             actualSpeed = Math.abs(this.player.body.velocity.x);
             this.player.body.velocity.x=actualSpeed;
         }
@@ -263,7 +275,7 @@ export default class game extends Phaser.Scene {
             }
         }
         if (this.player.body.position.y < 100){
-            this.scene.start('escenaFinal',{numero : 1, totalEsferas: this.totalEsferas, totalRecogidas: this.totalRecogidas}); 
+            this.scene.start('escenaFinal',{numero : 1, totalEsferas: this.totalEsferas, totalRecogidas: this.totalRecogidas, puntuacion: this.score}); 
         }
 
 
