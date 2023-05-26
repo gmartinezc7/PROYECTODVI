@@ -20,6 +20,15 @@ export default class menuniveles extends Phaser.Scene {
 		this.load.image('nivel4', './assets/niveles/nivel4.png');
 		this.load.image('nivel5', './assets/niveles/nivel5.png');
         this.load.image('back', './assets/Botones/botonback.jpg');
+		this.load.image('estrellas', './assets/Dialogo Victoria/estrellas.png');
+		this.load.image('bestscore0', './assets/Dialogo Victoria/bestScore0.png');
+        this.load.image('bestscore1', './assets/Dialogo Victoria/bestScore1.png');
+        this.load.image('bestscore2', './assets/Dialogo Victoria/bestscore2.png');
+        this.load.image('bestscore3', './assets/Dialogo Victoria/bestscore3.png');
+		this.load.image('esferas', './assets/Mapas/esfera4.png');
+
+		
+		
 	}
 
 	/**
@@ -36,51 +45,97 @@ export default class menuniveles extends Phaser.Scene {
 		};
 
 		this.character = this.registry.get('selectedCharacter');
+
+		const totalStars = this.registry.get('totalStars') || 0;
+		const EsferaCont=this.registry.get('EsferaCont')|| 0;
+		
+
+		const starImage = this.add.image(100,50, 'estrellas');
+        starImage.setScale(0.25);
+    	const starsText = this.add.text(140, 35, `: ${totalStars}`, {
+			fontFamily: 'Arial Black, Arial, sans-serif',
+			fontSize: '40px',
+			color: '#8B4513',
+    	});
+    starsText.setScrollFactor(0, 0);
+
+	const EsferaImage = this.add.image(450,50, 'esferas');
+	EsferaImage.setScale(0.25);
+	const EsferaText = this.add.text(490, 35, `: ${EsferaCont}`, {
+		fontFamily: 'Arial Black, Arial, sans-serif',
+		fontSize: '40px',
+		color: '#8B4513',
+	});
+EsferaText.setScrollFactor(0, 0);
 		
 		
 		//Añadimos los botones de niveles
         //Escuchamos los eventos del ratón cuando interactual con nuestro sprite de cada nivel
 
         //a cada nivel habría que pasarle los datos de ese nivel
+        const levelCompleted = this.registry.get('levelCompleted') || 1 ;
+		const highestlevel = this.registry.get('highestlevel') || 1 ;
+		
 
-        this.level1 = this.add.image(200, 200, 'nivel1').setInteractive();		
-	    this.level1.on('pointerdown', pointer => {
-			this.scene.stop('game');
-			nivel.numero = 1;
-	    	this.scene.start('game', {nivel: nivel.numero});
-	    });
+		for (let i = 1; i <= 5; i++) {
+            const levelButton = this.add
+            .image(200 + (i - 1) % 2 * 300, 200 + Math.floor((i - 1) / 2) * 150, `nivel${i}`)
+            .setInteractive();
 
-		this.level2 = this.add.image(500, 200, 'nivel2').setInteractive();		
-	    this.level2.on('pointerdown', pointer => {
-			this.scene.stop('game');
-	    	nivel.numero = 2;
-	    	this.scene.start('game', {nivel: nivel.numero});
-	    });
+			const bestScore = this.registry.get(`bestScoreLevel${i}`) || 0;
 
-        this.level3 = this.add.image(200, 350, 'nivel3').setInteractive();		
-	    this.level3.on('pointerdown', pointer => {
-			this.scene.stop('game');
-	    	nivel.numero = 3;
-	    	this.scene.start('game', {nivel: nivel.numero});
-	    });
+			if(bestScore<1){
+				const score0  = this.add.image(levelButton.x ,levelButton.y - 75, 'bestscore0');
+                score0.setScale(0.075);
 
-        this.level4 = this.add.image(500, 350, 'nivel4').setInteractive();		
-	    this.level4.on('pointerdown', pointer => {
-			this.scene.stop('game');
-	    	nivel.numero = 4;
-	    	this.scene.start('game', {nivel: nivel.numero});
-	    });
+			}
+			else if(bestScore<2){
+				const score1 = this.add.image(levelButton.x ,levelButton.y - 75, 'bestscore1');
+				score1.setScale(0.12);
+			}
+			else if(bestScore<3){
+				const score2 = this.add.image(levelButton.x ,levelButton.y - 75, 'bestscore2');
+				score2.setScale(0.12);
+			}
+			else if(bestScore<4){
+				const score3 = this.add.image(levelButton.x ,levelButton.y - 75, 'bestscore3');
+				score3.setScale(0.12);
+			}
 
-        this.level5 = this.add.image(350, 500, 'nivel5').setInteractive();		
-	    this.level5.on('pointerdown', pointer => {
-			this.scene.stop('game');
-	    	nivel.numero = 5;
-	    	this.scene.start('game', {nivel: nivel.numero});
-	    });
+            
+			const requiredLevel = i - 1;
+			const requiredStars = 5*i-5;
+			
+
+            if (i > levelCompleted || (i === levelCompleted && totalStars < requiredStars)) {
+                levelButton.setTint(0x808080);
+                
+				levelButton.on('pointerdown', () => {
+					 // Replace with the actual required number of stars
+					this.createRequirementsPopup(i, requiredLevel, requiredStars);
+				});
+            } else {
+                levelButton.on('pointerdown', () => {
+				this.registry.set(`highestlevel`,i);
+                this.scene.start('game', { nivel: i });
+                });
+            }
+        }
+
 
         this.buttonBack = this.add.image(600,640,'back').setInteractive();
         this.buttonBack.on('pointerdown', pointer => {
             this.scene.start('titulo');
+			this.registry.set('levelCompleted', 1);
+			this.registry.set('totalStars', 0);
+			this.registry.set('bestScoreLevel1', 0);
+			this.registry.set('bestScoreLevel2', 0);
+			this.registry.set('bestScoreLevel3', 0);
+			this.registry.set('bestScoreLevel4', 0);
+			this.registry.set('bestScoreLevel5', 0);
+			this.registry.set('EsferaCont',0);
+
+
 	    });
 
 		this.skins = this.add.image(350,660, 'skins').setInteractive();
@@ -94,5 +149,47 @@ export default class menuniveles extends Phaser.Scene {
 
 	update(){
 
+	}
+
+	createRequirementsPopup(level, requiredLevel, requiredStars) {
+		const popup = this.add.container(360, 360);
+	
+		const background = this.add.graphics();
+		background.fillStyle(0x000000, 0.8);
+		background.fillRect(-200, -100, 400, 200);
+		popup.add(background);
+	
+		const text = this.add.text(0, -50, `Level ${level} locked!`, {
+			fontFamily: 'Arial',
+			fontSize: '24px',
+			color: '#ffffff',
+			align: 'center',
+			wordWrap: { width: 300, useAdvancedWrap: true },
+		});
+		text.setOrigin(0.5);
+		popup.add(text);
+	
+		const requirementText = this.add.text(0, 0, `Complete level ${requiredLevel} and earn ${requiredStars} stars to unlock.`, {
+			fontFamily: 'Arial',
+			fontSize: '16px',
+			color: '#ffffff',
+			align: 'center',
+			wordWrap: { width: 300, useAdvancedWrap: true },
+		});
+		requirementText.setOrigin(0.5);
+		popup.add(requirementText);
+	
+		const closeText = this.add.text(0, 50, 'Close', {
+			fontFamily: 'Arial',
+			fontSize: '20px',
+			color: '#ffffff',
+			align: 'center',
+		});
+		closeText.setOrigin(0.5);
+		closeText.setInteractive();
+		closeText.on('pointerdown', () => {
+			popup.destroy();
+		});
+		popup.add(closeText);
 	}
 }

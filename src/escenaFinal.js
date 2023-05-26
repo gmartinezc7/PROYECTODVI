@@ -32,6 +32,18 @@ export default class escenaFinal extends Phaser.Scene {
 		this.totalRecogidas = data.totalRecogidas;
 		this.level = data.nivel;
 		this.scoreFinal = data.puntuacion;
+		this.levelCompleted=1;
+		
+		this.totalStars=0;
+		this.bestScoreLevel1=0;
+		this.bestScoreLevel2=0;
+		this.bestScoreLevel3=0;
+		this.bestScoreLevel4=0;
+		this.bestScoreLevel5=0;
+
+		
+
+		
 	}
 
 	/**
@@ -48,14 +60,65 @@ export default class escenaFinal extends Phaser.Scene {
 			this.texto = this.add.image(360, 360, 'gameOver')
 		}else{
 
+			const levelCompleted = this.registry.get('levelCompleted');
+
+            switch(this.level){
+                case 1:
+                    if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
+                
+                        this.registry.set('levelCompleted', 2);
+                      }
+
+                
+                break;
+                case 2:
+                    if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
+                
+                        this.registry.set('levelCompleted', 3);
+                      }
+
+                break;
+                case 3:
+                    if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
+                
+                        this.registry.set('levelCompleted', 4);
+                      }
+
+                break;
+                case 4:
+                    if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
+                
+                        this.registry.set('levelCompleted', 5);
+                      }
+                break;
+                
+            }
+
+			const totalStars = this.registry.get('totalStars')
+			const bestScore=this.registry.get(`bestScoreLevel${this.level}`)
+			
+
 			if (this.totalRecogidas >= 0.8*this.totalEsferas){
 				this.add.image(360,300, 'victoria3');
+				this.registry.set('totalStars', totalStars+3);
+				this.registry.set(`bestScoreLevel${this.level}`,3)
 			}
 			else if(this.totalRecogidas >= 0.4*this.totalEsferas){
 				this.add.image(360,300, 'victoria2');
+				this.registry.set('totalStars', totalStars+2);
+				if (bestScore<2){
+					this.registry.set(`bestScoreLevel${this.level}`,2)
+
+				}
+
 			}
 			else{
 				this.add.image(360,300, 'victoria1');
+				this.registry.set('totalStars', totalStars+1);
+				if (bestScore<1){
+					this.registry.set(`bestScoreLevel${this.level}`,1)
+
+				}
 			}
 
 
@@ -83,7 +146,8 @@ export default class escenaFinal extends Phaser.Scene {
 		this.buttonBack = this.add.image(550,660,'menu').setInteractive();
 		this.buttonBack.setScale(0.7);
         this.buttonBack.on('pointerdown', pointer => {
-			window.location.reload();
+			this.scene.start('menuniveles');
+
 	    });
 
 
