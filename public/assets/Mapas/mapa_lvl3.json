@@ -427,7 +427,7 @@
         {
          "draworder":"topdown",
          "id":7,
-         "name":"Esferas de Luz",
+         "name":"Esferas",
          "objects":[
                 {
                  "height":72,
@@ -2268,12 +2268,12 @@
         {
          "draworder":"topdown",
          "id":5,
-         "name":"Enemigos",
+         "name":"Gotas",
          "objects":[
                 {
                  "height":72,
                  "id":48,
-                 "name":"Enemigo",
+                 "name":"Gota",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2284,7 +2284,7 @@
                 {
                  "height":72,
                  "id":50,
-                 "name":"Enemigo",
+                 "name":"Gota",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2295,7 +2295,7 @@
                 {
                  "height":72,
                  "id":51,
-                 "name":"Enemigo",
+                 "name":"Gota",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2306,7 +2306,7 @@
                 {
                  "height":72,
                  "id":52,
-                 "name":"Enemigo",
+                 "name":"Gota",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2317,7 +2317,7 @@
                 {
                  "height":72,
                  "id":53,
-                 "name":"Enemigo",
+                 "name":"Gota",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2328,7 +2328,7 @@
                 {
                  "height":72,
                  "id":56,
-                 "name":"Enemigo",
+                 "name":"Gota",
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -2339,7 +2339,7 @@
                 {
                  "height":72,
                  "id":57,
-                 "name":"Enemigo",
+                 "name":"Gota",
                  "rotation":0,
                  "type":"",
                  "visible":true,

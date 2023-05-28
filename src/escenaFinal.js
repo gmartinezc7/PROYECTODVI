@@ -40,10 +40,6 @@ export default class escenaFinal extends Phaser.Scene {
 		this.bestScoreLevel3=0;
 		this.bestScoreLevel4=0;
 		this.bestScoreLevel5=0;
-
-		
-
-		
 	}
 
 	/**
@@ -67,36 +63,29 @@ export default class escenaFinal extends Phaser.Scene {
                     if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
                 
                         this.registry.set('levelCompleted', 2);
-                      }
-
-                
+					}
                 break;
                 case 2:
                     if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
                 
                         this.registry.set('levelCompleted', 3);
-                      }
-
+                    }
                 break;
                 case 3:
                     if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
                 
                         this.registry.set('levelCompleted', 4);
                       }
-
                 break;
                 case 4:
                     if (!(levelCompleted < this.level) && !(levelCompleted > this.level) ) {
                 
                         this.registry.set('levelCompleted', 5);
                       }
-                break;
-                
+                break;              
             }
-
 			const totalStars = this.registry.get('totalStars')
 			const bestScore=this.registry.get(`bestScoreLevel${this.level}`)
-			
 
 			if (this.totalRecogidas >= 0.8*this.totalEsferas){
 				this.add.image(360,300, 'victoria3');
@@ -108,9 +97,7 @@ export default class escenaFinal extends Phaser.Scene {
 				this.registry.set('totalStars', totalStars+2);
 				if (bestScore<2){
 					this.registry.set(`bestScoreLevel${this.level}`,2)
-
 				}
-
 			}
 			else{
 				this.add.image(360,300, 'victoria1');
@@ -120,38 +107,22 @@ export default class escenaFinal extends Phaser.Scene {
 
 				}
 			}
-
-
-
 			this.scoreText2 = this.add.text(200, 410, 'Score: ' + this.scoreFinal, {fontFamily: 'Arial', fontSize: '55px', fontStyle: 'bold', color: '#F1A63F'});
 			this.scoreText2.style.fontStyle.bold();
 			this.scoreText2.setScrollFactor(0,0);
 			this.scoreText2.setDepth(5);
 
-
-
-
-
-			
 			this.sound.stopAll();
 			this.Winsound=this.sound.add('winaudio');
 			this.Winsound.play();
 		}
-
-
-
-
 
 		// BOTON MENU NO REINICIA BIEN LA ESCENA
 		this.buttonBack = this.add.image(550,660,'menu').setInteractive();
 		this.buttonBack.setScale(0.7);
         this.buttonBack.on('pointerdown', pointer => {
 			this.scene.start('menuniveles');
-
 	    });
-
-
-
 
 		// BOTON RESTART FUNCIONA
 		this.buttonRestart = this.add.image(320, 660, 'restart').setInteractive();
@@ -163,7 +134,6 @@ export default class escenaFinal extends Phaser.Scene {
             //this.scene.start('game', {nivel: this.level})
 	    });
 
-
 		// HACER UN IF Y DEPENDIENDO DEL SCORE QUE SE RECIBA SE MUESTRA IMAGEN CON
 		// 1 ESTRELLA, 2 O 3
 		
@@ -172,8 +142,5 @@ export default class escenaFinal extends Phaser.Scene {
 		//this.scene.pause();
 	}
 
-	update(){
-
-
-	}
+	update(){}
 }

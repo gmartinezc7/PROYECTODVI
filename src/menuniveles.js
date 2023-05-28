@@ -26,9 +26,6 @@ export default class menuniveles extends Phaser.Scene {
         this.load.image('bestscore2', './assets/Dialogo Victoria/bestscore2.png');
         this.load.image('bestscore3', './assets/Dialogo Victoria/bestscore3.png');
 		this.load.image('esferas', './assets/Mapas/esfera4.png');
-
-		
-		
 	}
 
 	/**
@@ -48,7 +45,6 @@ export default class menuniveles extends Phaser.Scene {
 
 		const totalStars = this.registry.get('totalStars') || 0;
 		const EsferaCont=this.registry.get('EsferaCont')|| 0;
-		
 
 		const starImage = this.add.image(100,50, 'estrellas');
         starImage.setScale(0.25);
@@ -66,7 +62,7 @@ export default class menuniveles extends Phaser.Scene {
 		fontSize: '40px',
 		color: '#8B4513',
 	});
-EsferaText.setScrollFactor(0, 0);
+	EsferaText.setScrollFactor(0, 0);
 		
 		
 		//Añadimos los botones de niveles
@@ -101,15 +97,12 @@ EsferaText.setScrollFactor(0, 0);
 				const score3 = this.add.image(levelButton.x ,levelButton.y - 75, 'bestscore3');
 				score3.setScale(0.12);
 			}
-
             
 			const requiredLevel = i - 1;
-			const requiredStars = 5*i-5;
-			
+			const requiredStars = 3*i-5;
 
             if (i > levelCompleted || (i === levelCompleted && totalStars < requiredStars)) {
                 levelButton.setTint(0x808080);
-                
 				levelButton.on('pointerdown', () => {
 					 // Replace with the actual required number of stars
 					this.createRequirementsPopup(i, requiredLevel, requiredStars);
@@ -122,7 +115,6 @@ EsferaText.setScrollFactor(0, 0);
             }
         }
 
-
         this.buttonBack = this.add.image(600,640,'back').setInteractive();
         this.buttonBack.on('pointerdown', pointer => {
             this.scene.start('titulo');
@@ -134,10 +126,7 @@ EsferaText.setScrollFactor(0, 0);
 			this.registry.set('bestScoreLevel4', 0);
 			this.registry.set('bestScoreLevel5', 0);
 			this.registry.set('EsferaCont',0);
-
-
 	    });
-
 		this.skins = this.add.image(350,660, 'skins').setInteractive();
 		this.skins.setScale(0.6);
 		this.skins.on('pointerdown', pointer => {
@@ -147,13 +136,10 @@ EsferaText.setScrollFactor(0, 0);
 	    });
 	}
 
-	update(){
-
-	}
+	update(){	}
 
 	createRequirementsPopup(level, requiredLevel, requiredStars) {
 		const popup = this.add.container(360, 360);
-	
 		const background = this.add.graphics();
 		background.fillStyle(0x000000, 0.8);
 		background.fillRect(-200, -100, 400, 200);
@@ -179,17 +165,32 @@ EsferaText.setScrollFactor(0, 0);
 		requirementText.setOrigin(0.5);
 		popup.add(requirementText);
 	
-		const closeText = this.add.text(0, 50, 'Close', {
-			fontFamily: 'Arial',
-			fontSize: '20px',
-			color: '#ffffff',
-			align: 'center',
-		});
+		const closeText = this.add.text(0, 50, 'Close', { font: '24px Arial', color: '#ffffff', backgroundColor: '#333333', padding: { x: 10, y: 5 },}).setOrigin(0.5).setInteractive();
 		closeText.setOrigin(0.5);
 		closeText.setInteractive();
 		closeText.on('pointerdown', () => {
 			popup.destroy();
 		});
 		popup.add(closeText);
+		/*
+		const dialogBox = this.add.container(360, 360);
+        const dialogBackground = this.add.graphics();
+        dialogBackground.fillStyle(0x000000, 0.7).fillRect(-250, -200, 500, 300);
+        dialogBackground.fillRect(-250, -200, 500, 300);
+        dialogBox.add(dialogBackground);
+            
+
+        let characterName = this.add.text(0, -150, character.name + ' BLOQUEADO', { font: '32px Arial', color: '#ff0000' }).setOrigin(0.5);
+        dialogBox.add(characterName);
+        const requiredLevelText = `Debes alcanzar el nivel ${character.requiredLevel} para desbloquear este personaje.`;
+        const characterDescription = this.add.text(0, -50, `${requiredLevelText}`, { font: '24px Arial', color: '#ffffff', align: 'center', wordWrap: { width: 350 } }).setOrigin(0.5);
+        dialogBox.add(characterDescription);
+      
+        const closeButton = this.add.text(0, 20, 'Cerrar', { font: '24px Arial', color: '#ffffff', backgroundColor: '#333333', padding: { x: 10, y: 5 },}).setOrigin(0.5).setInteractive();
+        closeButton.on('pointerdown', () => {
+          dialogBox.destroy();
+        });
+        dialogBox.add(closeButton);
+		*/
 	}
 }
