@@ -88,6 +88,29 @@ export default class game extends Phaser.Scene {
             this.scene.launch('escenaPausada');
         });
 
+        //Indicadores power up
+        this.iman_icono = this.add.image(570,50,'iman');
+        this.iman_icono.setScale(0.2);
+        this.iman_icono.setScrollFactor(0,0);
+        this.iman_icono.setDepth(5);
+        this.iman_icono.visible = false;
+        this.x2_icono = this.add.image(570,50,'x2');
+        this.x2_icono.setScale(0.2);
+        this.x2_icono.setScrollFactor(0,0);
+        this.x2_icono.setDepth(5);
+        this.x2_icono.visible = false;
+        this.boost_icono = this.add.image(570,50,'boost');
+        this.boost_icono.setScale(0.2);
+        this.boost_icono.setScrollFactor(0,0);
+        this.boost_icono.setDepth(5);
+        this.boost_icono.visible = false;
+        this.globo_icono = this.add.image(570,50,'boost');
+        this.globo_icono.setScale(0.2);
+        this.globo_icono.setScrollFactor(0,0);
+        this.globo_icono.setDepth(5);
+        this.globo_icono.visible = false;
+
+
         this.map = this.make.tilemap({ 
             key: `tilemap${this.nivel}`, 
             tileWidth: 32, 
@@ -506,11 +529,13 @@ export default class game extends Phaser.Scene {
         this.iman_activo = true;
         iman.body.visible = false;
         iman.destroy();
+        this.iman_icono.visible = true;
         this.time.addEvent({
             delay: 5000, //Duracion del iman
             loop: false,
             callback: function(){
                 this.iman_activo = false;
+                this.iman_icono.visible = false;
             }.bind(this)
         });
     }
@@ -520,11 +545,13 @@ export default class game extends Phaser.Scene {
         this.x2_activo = true;
         x2.body.visible = false;
         x2.destroy();
+        this.x2_icono.visible = true;
         this.time.addEvent({
             delay: 5000, //Duracion del power up
             loop: false,
             callback: function(){
                 this.x2_activo = false;
+                this.x2_icono.visible = false;
             }.bind(this)
         });
 
@@ -533,30 +560,32 @@ export default class game extends Phaser.Scene {
     //handler con el boost
     handlePlayerCollisionBoost(player,boost){
         this.boost_activo = true;
-        this.player.body.setVelocityY(-1500);
+        this.player.body.setVelocityY(-1600);
         boost.body.visible = false;
         boost.destroy();
+        this.boost_icono.visible = true;
         this.time.addEvent({
             delay: 5000, //Duracion del power up
             loop: false,
             callback: function(){
                 this.boost_activo = false;
                 this.player.body.setVelocityY(-600);
+                this.boost_icono.visible = false;
             }.bind(this)
         });
     }
 
     handlePlayerCollisionGlobo(player,globo){
         this.globo_activo = true;
-        
         globo.body.visible = false;
         globo.destroy();
+        this.globo_icono.visible = true;
         this.time.addEvent({
             delay: 5000,
             loop: false,
             callback: function(){
                 this.globo_activo = false;
-                
+                this.globo_icono.visible = false;
             }.bind(this)
         });
     }
