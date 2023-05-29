@@ -10,6 +10,8 @@ export default class game extends Phaser.Scene {
         this.height = 600;
         this.width = 600;
         this.restart = false;
+        this.dir = 1;
+        this.iman_activo = false;
 	}
 
     init(data) {
@@ -46,6 +48,11 @@ export default class game extends Phaser.Scene {
         this.load.image('estrellaluz','./assets/Mapas/esfera' + this.nivel + '.png');
         this.load.image('gotaax','./assets/Skins/enemigo_agua.png');
         this.load.image('cenizaax','./assets/Skins/enemigo_ceniza.png');
+        this.load.image('pajaroox', './assets/Skins/enemigo_pajaro.png');
+        this.load.image('pajaroox2', './assets/Skins/enemigo_pajaro2.png');
+        this.load.image('iman','./assets/potenciadores/potenciador_iman.png');
+        this.load.image('globo','./assets/potenciadores/potenciador_globo.png');
+        this.load.image('x2','./assets/potenciadores/potenciador_x2.png');
 	}
 	
 	/**
@@ -103,12 +110,41 @@ export default class game extends Phaser.Scene {
         //this.player.body.position.x;
         this.player.setScale(0.2);
 
-        
-        
 
+        
+        
 
         //En todos los niveles menos en el primero se incorpora el enemigo 'Gotas'
         if(this.nivel > 1){
+
+
+            this.pajarosLayer = this.map.createLayer('Pajaros',tileset1);
+            let pajaros = this.map.createFromObjects('Pajaros', {name: "Pajaro", key: 'pajaroox'});
+
+            this.pajarosGroup = this.add.group();
+            this.pajarosGroup.addMultiple(pajaros);
+            pajaros.forEach(obj => {
+                this.physics.add.existing(obj);
+                obj.body.allowGravity = false;
+                obj.body.immovable = true;
+
+                //obj.setVelocityX(1 * this.dir);
+
+                this.time.addEvent({
+                    delay:500,
+                    loop: true,
+                    callback: function(){
+                        if(obj.texture.key === 'pajaroox'){
+                            obj.setTexture('pajaroox2');
+                        }else{
+                            obj.setTexture('pajaroox');
+                        }
+                    }
+                });
+            });
+            
+            this.physics.add.collider(this.player, this.pajarosGroup, this.handlePlayerOnGotaorCeniza, null, this);
+
             this.gotasLayer = this.map.createLayer('Gotas', tileset1);
             let gotas = this.map.createFromObjects('Gotas', {name: "Gota", key: 'gotaax' });
 		
@@ -138,6 +174,7 @@ export default class game extends Phaser.Scene {
                     this.physics.add.existing(obj);
                     obj.body.allowGravity = false;
                     obj.body.immovable = true;
+                    obj.direccion = 1;
                     //obj.body.gravity.y = 5;
                 });
                 this.physics.add.collider(this.player, this.cenizasGroup, this.handlePlayerOnGotaorCeniza, null, this);
@@ -154,7 +191,8 @@ export default class game extends Phaser.Scene {
 		plataformas.forEach(obj => {
 			this.physics.add.existing(obj);
             obj.body.allowGravity = false;      
-            obj.body.immovable = true;   
+            obj.body.immovable = true;
+            obj.direccion = 1;  
 		});
 
         this.physics.add.collider(this.player, this.platGroup, this.handlePlayerOnPlatform, null, this);
@@ -176,6 +214,18 @@ export default class game extends Phaser.Scene {
 		});
 
         this.physics.add.overlap(this.player, this.esfGroup, this.handlePlayerCollisionEsfera, null, this);
+
+        //this.imanesLayer = this.map.createLayer('Imanes',tileset1);
+        let imanes = this.map.createFromObjects('Imanes',{name: "Iman", key: "iman"});
+        this.imanGroup = this.add.group();
+        this.imanGroup.addMultiple(imanes);
+        imanes.forEach(obj => {
+            this.physics.add.existing(obj);
+            obj.body.allowGravity = false;
+            obj.body.immovable = true;
+        });
+        
+        this.physics.add.overlap(this.player, this.imanGroup, this.handlePlayerCollisionIman, null, this);
 
         // Nueva función de seguir al jugador
         this.cameras.main.setFollowOffset(100,0);
@@ -214,6 +264,85 @@ export default class game extends Phaser.Scene {
 	}
 
     update() {
+        
+        if(this.nivel > 1){
+            
+            this.pajarosGroup.getChildren().forEach(function(pajaro) {
+                pajaro.x += 1 * this.dir;
+                //pajaro.body.setVelocityX(1*this.dir)
+    
+                if(pajaro.x >= 690 && this.dir === 1){
+                    //pajaro.flipX= !pajaro.flipX;
+                    this.dir = -1;
+                    
+                }else if (pajaro.x <= 30 && this.dir === -1){
+                    //pajaro.flipX= !pajaro.flipX;
+                    this.dir = 1;
+                }
+
+                
+            }, this);
+
+            this.pajarosGroup.getChildren().forEach(function(pajaro) {
+                if(pajaro.x > 650){
+                    pajaro.flipX= true;
+                    
+                    
+                }else if (pajaro.x < 40){
+                    pajaro.flipX= false;
+                    
+                }
+            });
+
+            this.gotasGroup.getChildren().forEach(function(gota){
+                gota.y += 0.5;
+            });
+
+        }
+        
+        if(this.nivel ===5){
+            this.platGroup.getChildren().forEach(function(plat){
+                
+                plat.x += 1 * plat.direccion;
+
+                if(plat.x >= 640 || plat.x <= 70){
+                    plat.direccion *= -1;
+                }
+            });
+        }
+        if(this.nivel === 5){
+            this.cenizasGroup.getChildren().forEach(function(ceni){
+
+                ceni.x += 1 * ceni.direccion;
+                
+                if(ceni.x >= 640 || ceni.x <= 70){
+                    ceni.direccion *= -1;
+                }
+            });
+        }
+
+        if(this.iman_activo){
+            this.esfGroup.getChildren().forEach(function(esfera) {
+            
+                var direccionX = this.player.body.position.x - esfera.x;
+                var direccionY = this.player.body.position.y - esfera.y;
+            
+                
+                var distancia = Math.sqrt(direccionX * direccionX + direccionY * direccionY);
+
+                if(distancia < 1000){
+                    var fuerza = 500 / (distancia * distancia);
+                    esfera.body.velocity.x += direccionX * fuerza;
+                    esfera.body.velocity.y += direccionY * fuerza;
+                }
+                
+              }.bind(this));
+
+        }
+        
+
+        
+        
         
 
         let actualSpeed;
@@ -306,6 +435,20 @@ export default class game extends Phaser.Scene {
         esfera.body.visible = false;
         esfera.destroy();
         this.totalRecogidas++;   
+    }
+
+    handlePlayerCollisionIman(player,iman){
+        this.iman_activo = true;
+        iman.body.visible = false;
+        iman.destroy();
+        this.time.addEvent({
+            delay: 5000, //Duracion del iman
+            loop: false,
+            callback: function(){
+                this.iman_activo = false;
+            }.bind(this)
+        });
+
     }
 
     handlePlayerOnGotaorCeniza(player, gota) {

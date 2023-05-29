@@ -2101,6 +2101,28 @@
         },
         {
               "draworder":"topdown",
+              "id":8,
+              "name":"Pajaros",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":169,
+                      "name":"Pajaro",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":72,
+                      "y":13752
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             },
+        {
+              "draworder":"topdown",
               "id":3,
               "name":"Objetos",
               "objects":[
@@ -2114,28 +2136,6 @@
                       "width":0,
                       "x":360,
                       "y":13927
-                     }],
-              "opacity":1,
-              "type":"objectgroup",
-              "visible":true,
-              "x":0,
-              "y":0
-             },
-             {
-              "draworder":"topdown",
-              "id":4,
-              "name":"Imanes",
-              "objects":[
-                     {
-                      "class":"",
-                      "height":72,
-                      "id":1,
-                      "name":"Iman",
-                      "rotation":0,
-                      "visible":true,
-                      "width":72,
-                      "x":300,
-                      "y":13738.7
                      }],
               "opacity":1,
               "type":"objectgroup",
