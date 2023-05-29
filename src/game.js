@@ -141,6 +141,7 @@ export default class game extends Phaser.Scene {
 		this.player = this.mov[0];
         //this.player.body.position.x;
         this.player.setScale(0.2);
+        this.player.body.setSize(105,400);
 
         
         const totalStars = this.totalStars;
@@ -159,7 +160,7 @@ export default class game extends Phaser.Scene {
         
 
         //En todos los niveles menos en el primero se incorpora el enemigo 'Gotas'
-        if(this.nivel > 1){
+        if(this.nivel >= 1){
 
             this.pajarosLayer = this.map.createLayer('Pajaros',tileset1);
             let pajaros = this.map.createFromObjects('Pajaros', {name: "Pajaro", key: 'pajaroox'});
@@ -204,7 +205,7 @@ export default class game extends Phaser.Scene {
             this.physics.add.collider(this.player, this.gotasGroup, this.handlePlayerOnGotaorCeniza, null, this);
 
             //El nivel 4 y 5, además incorporan un nuevo enemigo "Ceniza"
-            if(this.nivel >= 3){
+            if(this.nivel >= 1){
                 if(this.nivel == 4){
                     this.fuegoLayer = this.map.createLayer('Fuegos', tileset1);
                 }
@@ -220,7 +221,7 @@ export default class game extends Phaser.Scene {
                     obj.body.allowGravity = false;
                     obj.body.immovable = true;
                     obj.direccion = 1;
-                    obj.body.setSize(100,100);
+                    obj.body.setSize(25,32);
                     //obj.body.gravity.y = 5;
                 });
                 this.physics.add.collider(this.player, this.cenizasGroup, this.handlePlayerOnGotaorCeniza, null, this);
@@ -510,7 +511,7 @@ export default class game extends Phaser.Scene {
         const playerBottom = player.body.y + player.body.height;
         const platformTop = platform.body.y;
 
-        if (playerBottom <= platformTop + 5) { // el jugador está encima de la plataforma
+        if (playerBottom <= platformTop + 5 && !this.boost_activo) { // el jugador está encima de la plataforma
           player.body.velocity.y = player.playerGetSpeed(); // impulsa al jugador hacia arriba
         }
     }
@@ -565,6 +566,9 @@ export default class game extends Phaser.Scene {
         this.player.body.setVelocityY(-1600);
         boost.body.visible = false;
         boost.destroy();
+        this.cenizasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=true;});
+        this.gotasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=true;});
+        this.pajarosGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=true;});
         this.boost_icono.visible = true;
         this.time.addEvent({
             delay: 5000, //Duracion del power up
@@ -573,6 +577,9 @@ export default class game extends Phaser.Scene {
                 this.boost_activo = false;
                 this.player.body.setVelocityY(-600);
                 this.boost_icono.visible = false;
+                this.cenizasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
+                this.gotasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
+                this.pajarosGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
             }.bind(this)
         });
     }
@@ -593,7 +600,7 @@ export default class game extends Phaser.Scene {
     }
 
     handlePlayerOnGotaorCeniza(player, gota) {
-        if (player.playerCheat() == false){
+        if (player.playerCheat() == false && this.boost_activo == false){
             this.scene.start('escenaFinal',{numero : 0}); 
         }        
     }
