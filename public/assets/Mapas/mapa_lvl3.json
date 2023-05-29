@@ -2484,6 +2484,72 @@
               "visible":true,
               "x":0,
               "y":0
+             }, 
+             {
+              "draworder":"topdown",
+              "id":12,
+              "name":"Boosters",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":205,
+                      "name":"Boost",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":72,
+                      "y":11590.6666666667
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             }, 
+             {
+              "draworder":"topdown",
+              "id":13,
+              "name":"Escudos",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":206,
+                      "name":"Escudo",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":648,
+                      "y":7342.66666666667
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             }, 
+             {
+              "draworder":"topdown",
+              "id":14,
+              "name":"Multiplicadores",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":207,
+                      "name":"Multiplicador",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":429.333333333333,
+                      "y":2233.33333333333
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
              }],
  "nextlayerid":12,
  "nextobjectid":205,

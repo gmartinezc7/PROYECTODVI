@@ -517,6 +517,11 @@ export default class game extends Phaser.Scene {
     }
 
     activate(){
+        this.iman_activo = false;
+        this.x2_activo = false;
+        this.globo_activo = false;
+        this.boost_activo = false;
+        this.escudo_activo = false; 
         const scene = this.scene.get('game');
         this.scene.restart(scene);
         this.scene.start('game');
@@ -536,8 +541,8 @@ export default class game extends Phaser.Scene {
     }
     
     handlePlayerCollisionEsfera(player, esfera){
-        if(this.x2_activo){ this.score += 100*2; }
-        else{ this.score += 100; }
+        if(this.x2_activo){ this.score += 1*2; }
+        else{ this.score += 1; }
         this.scoreText.setText('Score: ' + this.score);
         esfera.body.visible = false;
         esfera.destroy();
@@ -612,7 +617,7 @@ export default class game extends Phaser.Scene {
         this.pajarosGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=true;});
         this.escudo_icono.visible = true;
         this.time.addEvent({
-            delay: 60000, //Duracion del power up
+            delay: 10000, //Duracion del power up
             loop: false,
             callback: function(){
                 this.escudo_activo = false;
@@ -641,7 +646,13 @@ export default class game extends Phaser.Scene {
 
     handlePlayerOnGotaorCeniza(player, gota) {
         if (player.playerCheat() == false && this.boost_activo == false){
-            this.scene.start('escenaFinal',{numero : 0}); 
+            this.iman_activo = false;
+            this.x2_activo = false;
+            this.globo_activo = false;
+            this.boost_activo = false;
+            this.escudo_activo = false; 
+            this.scene.start('escenaFinal',{numero : 0});
+            
         }        
     }
 

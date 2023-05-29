@@ -2551,7 +2551,74 @@
               "visible":true,
               "x":0,
               "y":0
-             }],
+             }, 
+             {
+              "draworder":"topdown",
+              "id":12,
+              "name":"Boosters",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":275,
+                      "name":"Boost",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":434.666666666667,
+                      "y":9937.33333333333
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             }, 
+             {
+              "draworder":"topdown",
+              "id":13,
+              "name":"Imanes",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":276,
+                      "name":"Iman",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":145.333333333333,
+                      "y":7668
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             }, 
+             {
+              "draworder":"topdown",
+              "id":14,
+              "name":"Multiplicadores",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":277,
+                      "name":"Multiplicador",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":504,
+                      "y":13320
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             }
+             ],
  "nextlayerid":12,
  "nextobjectid":275,
  "orientation":"orthogonal",
