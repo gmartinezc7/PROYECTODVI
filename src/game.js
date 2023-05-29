@@ -24,7 +24,11 @@ export default class game extends Phaser.Scene {
         this.totalEsferas = 0;
         this.totalRecogidas = 0;
         this.inicioJuego = false;
-        this.inicioJuego2 = false; // variable de inicio para barra de progreso
+        this.inicioJuego2 = false; 
+        this.totalStars = this.registry.get('totalStars') || 0;
+        this.EsferaCont= 0;
+        this.bestScore = this.registry.get(`bestScoreLevel${this.nivel}`) || 0;
+// variable de inicio para barra de progreso
     }
 
 	/**
@@ -42,10 +46,10 @@ export default class game extends Phaser.Scene {
         this.cadena = "mapa_lvl" + this.nivel + ".json";
         this.cadena2 = "Tile" + this.nivel + ".png";
 
-        this.load.tilemapTiledJSON('tilemap', './assets/Mapas/' + this.cadena);
-        this.load.image('patronesTilemap', './assets/Mapas/' + this.cadena2);
-        this.load.image('plataformax','./assets/Mapas/plataforma' + this.nivel + '.png');
-        this.load.image('estrellaluz','./assets/Mapas/esfera' + this.nivel + '.png');
+        this.load.tilemapTiledJSON(`tilemap${this.nivel}`, './assets/Mapas/' + this.cadena);
+        this.load.image('patronesTilemap'+ this.nivel, './assets/Mapas/' + this.cadena2);
+        this.load.image('plataformax'+ this.nivel,'./assets/Mapas/plataforma' + this.nivel + '.png');
+        this.load.image('estrellaluz' + this.nivel,'./assets/Mapas/esfera' + this.nivel + '.png');
         this.load.image('gotaax','./assets/Skins/enemigo_agua.png');
         this.load.image('cenizaax','./assets/Skins/enemigo_ceniza.png');
         this.load.image('pajaroox', './assets/Skins/enemigo_pajaro.png');
@@ -80,13 +84,13 @@ export default class game extends Phaser.Scene {
         });
 
         this.map = this.make.tilemap({ 
-			key: 'tilemap', 
-			tileWidth: 32, 
-			tileHeight: 32 
-		});
+            key: `tilemap${this.nivel}`, 
+            tileWidth: 32, 
+            tileHeight: 32 
+        });
 
 
-        const tileset1 = this.map.addTilesetImage('Tile'+ this.nivel, 'patronesTilemap');
+        const tileset1 = this.map.addTilesetImage('Tile'+ this.nivel, 'patronesTilemap'+ this.nivel);
         
 
         // creamos las diferentes capas a través del tileset. El nombre de la capa debe aparecer en el .json del tilemap cargado
@@ -109,6 +113,18 @@ export default class game extends Phaser.Scene {
 		this.player = this.mov[0];
         //this.player.body.position.x;
         this.player.setScale(0.2);
+
+        
+        const totalStars = this.totalStars;
+        this.registry.set('totalStars', totalStars);
+
+       
+
+        this.EsferaCont =this.registry.get('EsferaCont')|| 0;
+		
+       
+       const bestScore = Math.max(this.bestScore, this.score);
+       this.registry.set(`bestScoreLevel${this.nivel}`, bestScore);
 
 
         
@@ -184,7 +200,7 @@ export default class game extends Phaser.Scene {
         //this.physics.world.enable(this.player);
 
         // Creamos los objetos a través de la capa de objetos del tilemap y la imagen o la clase que queramos
-		let plataformas = this.map.createFromObjects('Plataformas', {name: "Plataforma", key: 'plataformax' });
+		let plataformas = this.map.createFromObjects('Plataformas', {name: "Plataforma", key: 'plataformax'+ this.nivel });
 		
 		this.platGroup = this.add.group();
 		this.platGroup.addMultiple(plataformas)
@@ -203,7 +219,8 @@ export default class game extends Phaser.Scene {
             plataforma.body.checkCollision.down = false;
             plataforma.body.allowGravity = false;
         });
-        let esferas = this.map.createFromObjects('Esferas', {name: "Esfera", key: 'estrellaluz' });
+        let esferas = this.map.createFromObjects('Esferas', {name: "Esfera", key: 'estrellaluz' + this.nivel});
+
 		this.esfGroup = this.add.group();
 		this.esfGroup.addMultiple(esferas)
 		esferas.forEach(obj => {
@@ -404,7 +421,7 @@ export default class game extends Phaser.Scene {
             }
         }
         if (this.player.body.position.y < 100){
-            this.scene.start('escenaFinal',{numero : 1, totalEsferas: this.totalEsferas, totalRecogidas: this.totalRecogidas, puntuacion: this.score}); 
+            this.scene.start('escenaFinal',{numero : 1, totalEsferas: this.totalEsferas, totalRecogidas: this.totalRecogidas, puntuacion: this.score, nivel:this.nivel}); 
         }
 
 
@@ -435,6 +452,8 @@ export default class game extends Phaser.Scene {
         esfera.body.visible = false;
         esfera.destroy();
         this.totalRecogidas++;   
+        
+		this.registry.set('EsferaCont',this.EsferaCont+this.totalRecogidas);
     }
 
     handlePlayerCollisionIman(player,iman){
