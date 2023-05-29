@@ -10,8 +10,12 @@ export default class game extends Phaser.Scene {
         this.height = 600;
         this.width = 600;
         this.restart = false;
-        this.dir = 1;
+        this.dir = 1; // Direccion de los pajaros
+        //Toggle de los power-ups
         this.iman_activo = false;
+        this.x2_activo = false;
+        this.globo_activo = false;
+        this.boost_activo = false;
 	}
 
     init(data) {
@@ -57,6 +61,7 @@ export default class game extends Phaser.Scene {
         this.load.image('iman','./assets/potenciadores/potenciador_iman.png');
         this.load.image('globo','./assets/potenciadores/potenciador_globo.png');
         this.load.image('x2','./assets/potenciadores/potenciador_x2.png');
+        this.load.image('boost','./assets/potenciadores/potenciador_boost.png');
 	}
 	
 	/**
@@ -132,7 +137,6 @@ export default class game extends Phaser.Scene {
 
         //En todos los niveles menos en el primero se incorpora el enemigo 'Gotas'
         if(this.nivel > 1){
-
 
             this.pajarosLayer = this.map.createLayer('Pajaros',tileset1);
             let pajaros = this.map.createFromObjects('Pajaros', {name: "Pajaro", key: 'pajaroox'});
@@ -232,7 +236,7 @@ export default class game extends Phaser.Scene {
 
         this.physics.add.overlap(this.player, this.esfGroup, this.handlePlayerCollisionEsfera, null, this);
 
-        //this.imanesLayer = this.map.createLayer('Imanes',tileset1);
+        //Power up Iman
         let imanes = this.map.createFromObjects('Imanes',{name: "Iman", key: "iman"});
         this.imanGroup = this.add.group();
         this.imanGroup.addMultiple(imanes);
@@ -243,6 +247,42 @@ export default class game extends Phaser.Scene {
         });
         
         this.physics.add.overlap(this.player, this.imanGroup, this.handlePlayerCollisionIman, null, this);
+
+        //Power up x2
+        let x2 = this.map.createFromObjects('Multiplicadores',{name: "Multiplicador", key: "x2"});
+        this.x2Group = this.add.group();
+        this.x2Group.addMultiple(x2);
+        x2.forEach(obj => {
+            this.physics.add.existing(obj);
+            obj.body.allowGravity = false;
+            obj.body.immovable = true;
+        });
+        
+        this.physics.add.overlap(this.player, this.x2Group, this.handlePlayerCollisionX2, null, this);
+
+        //Power up globo
+        let globos = this.map.createFromObjects('Globos',{name: "Globo", key: "globo"});
+        this.globosGroup = this.add.group();
+        this.globosGroup.addMultiple(globos);
+        globos.forEach(obj => {
+            this.physics.add.existing(obj);
+            obj.body.allowGravity = false;
+            obj.body.immovable = true;
+        });
+
+        this.physics.add.overlap(this.player, this.globosGroup, this.handlePlayerCollisionGlobo, null, this);
+
+        //Power up boost
+        let boosters = this.map.createFromObjects('Boosters',{name: "Boost", key: "boost"});
+        this.boostGroup = this.add.group();
+        this.boostGroup.addMultiple(boosters);
+        boosters.forEach(obj => {
+            this.physics.add.existing(obj);
+            obj.body.allowGravity = false;
+            obj.body.immovable = true;
+        });
+
+        this.physics.add.overlap(this.player, this.boostGroup, this.handlePlayerCollisionBoost, null, this);
 
         // Nueva función de seguir al jugador
         this.cameras.main.setFollowOffset(100,0);
@@ -356,6 +396,10 @@ export default class game extends Phaser.Scene {
               }.bind(this));
 
         }
+
+        if(this.globo_activo){
+            this.player.body.allowgravity = false;
+        }
         
 
         
@@ -447,7 +491,8 @@ export default class game extends Phaser.Scene {
     }
     
     handlePlayerCollisionEsfera(player, esfera){
-        this.score += 100;
+        if(this.x2_activo){ this.score += 100*2; }
+        else{ this.score += 100; }
         this.scoreText.setText('Score: ' + this.score);
         esfera.body.visible = false;
         esfera.destroy();
@@ -456,6 +501,7 @@ export default class game extends Phaser.Scene {
 		this.registry.set('EsferaCont',this.EsferaCont+this.totalRecogidas);
     }
 
+    //handler con el iman
     handlePlayerCollisionIman(player,iman){
         this.iman_activo = true;
         iman.body.visible = false;
@@ -467,14 +513,58 @@ export default class game extends Phaser.Scene {
                 this.iman_activo = false;
             }.bind(this)
         });
+    }
 
+    //handler con el x2
+    handlePlayerCollisionX2(player,x2){
+        this.x2_activo = true;
+        x2.body.visible = false;
+        x2.destroy();
+        this.time.addEvent({
+            delay: 5000, //Duracion del power up
+            loop: false,
+            callback: function(){
+                this.x2_activo = false;
+            }.bind(this)
+        });
+
+    }
+
+    //handler con el boost
+    handlePlayerCollisionBoost(player,boost){
+        this.boost_activo = true;
+        this.player.body.setVelocityY(-1500);
+        boost.body.visible = false;
+        boost.destroy();
+        this.time.addEvent({
+            delay: 5000, //Duracion del power up
+            loop: false,
+            callback: function(){
+                this.boost_activo = false;
+                this.player.body.setVelocityY(-600);
+            }.bind(this)
+        });
+    }
+
+    handlePlayerCollisionGlobo(player,globo){
+        this.globo_activo = true;
+        
+        globo.body.visible = false;
+        globo.destroy();
+        this.time.addEvent({
+            delay: 5000,
+            loop: false,
+            callback: function(){
+                this.globo_activo = false;
+                
+            }.bind(this)
+        });
     }
 
     handlePlayerOnGotaorCeniza(player, gota) {
         if (player.playerCheat() == false){
             this.scene.start('escenaFinal',{numero : 0}); 
-        }
-        
+        }        
     }
 
     updateBarraProgreso() {

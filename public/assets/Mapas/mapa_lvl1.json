@@ -2124,13 +2124,13 @@
              {
               "draworder":"topdown",
               "id":4,
-              "name":"Imanes",
+              "name":"Boosters",
               "objects":[
                      {
                       "class":"",
                       "height":72,
                       "id":1,
-                      "name":"Iman",
+                      "name":"Boost",
                       "rotation":0,
                       "visible":true,
                       "width":72,
