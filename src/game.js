@@ -10,7 +10,7 @@ export default class game extends Phaser.Scene {
         this.height = 600;
         this.width = 600;
         this.restart = false;
-        this.dir = 1; // Direccion de los pajaros
+        //this.dir = 1; // Direccion de los pajaros
         //Toggle de los power-ups
         this.iman_activo = false;
         this.x2_activo = false;
@@ -170,8 +170,9 @@ export default class game extends Phaser.Scene {
                 this.physics.add.existing(obj);
                 obj.body.allowGravity = false;
                 obj.body.immovable = true;
+                obj.direccion = 1;
+                obj.body.setSize(300,100);
 
-                //obj.setVelocityX(1 * this.dir);
 
                 this.time.addEvent({
                     delay:500,
@@ -197,12 +198,13 @@ export default class game extends Phaser.Scene {
                 this.physics.add.existing(obj);
                 obj.body.allowGravity = false;
                 obj.body.immovable = true;
+                obj.body.setSize(25,32);
                 //obj.body.gravity.y = 5;
             });
             this.physics.add.collider(this.player, this.gotasGroup, this.handlePlayerOnGotaorCeniza, null, this);
 
             //El nivel 4 y 5, además incorporan un nuevo enemigo "Ceniza"
-            if(this.nivel >= 4){
+            if(this.nivel >= 3){
                 if(this.nivel == 4){
                     this.fuegoLayer = this.map.createLayer('Fuegos', tileset1);
                 }
@@ -218,6 +220,7 @@ export default class game extends Phaser.Scene {
                     obj.body.allowGravity = false;
                     obj.body.immovable = true;
                     obj.direccion = 1;
+                    obj.body.setSize(100,100);
                     //obj.body.gravity.y = 5;
                 });
                 this.physics.add.collider(this.player, this.cenizasGroup, this.handlePlayerOnGotaorCeniza, null, this);
@@ -348,16 +351,16 @@ export default class game extends Phaser.Scene {
         if(this.nivel > 1){
             
             this.pajarosGroup.getChildren().forEach(function(pajaro) {
-                pajaro.x += 1 * this.dir;
+                pajaro.x += 1 * pajaro.direccion;
                 //pajaro.body.setVelocityX(1*this.dir)
     
-                if(pajaro.x >= 690 && this.dir === 1){
+                if(pajaro.x >= 690 && pajaro.direccion === 1){
                     //pajaro.flipX= !pajaro.flipX;
-                    this.dir = -1;
+                    pajaro.direccion = -1;
                     
-                }else if (pajaro.x <= 30 && this.dir === -1){
+                }else if (pajaro.x <= 30 && pajaro.direccion === -1){
                     //pajaro.flipX= !pajaro.flipX;
-                    this.dir = 1;
+                    pajaro.direccion = 1;
                 }
 
                 
@@ -366,7 +369,6 @@ export default class game extends Phaser.Scene {
             this.pajarosGroup.getChildren().forEach(function(pajaro) {
                 if(pajaro.x > 650){
                     pajaro.flipX= true;
-                    
                     
                 }else if (pajaro.x < 40){
                     pajaro.flipX= false;
