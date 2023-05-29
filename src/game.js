@@ -16,6 +16,7 @@ export default class game extends Phaser.Scene {
         this.x2_activo = false;
         this.globo_activo = false;
         this.boost_activo = false;
+        this.escudo_activo = false;
 	}
 
     init(data) {
@@ -62,6 +63,7 @@ export default class game extends Phaser.Scene {
         this.load.image('globo','./assets/potenciadores/potenciador_globo.png');
         this.load.image('x2','./assets/potenciadores/potenciador_x2.png');
         this.load.image('boost','./assets/potenciadores/potenciador_boost.png');
+        this.load.image('escudo','./assets/potenciadores/potenciador_escudo.png');
 	}
 	
 	/**
@@ -104,11 +106,16 @@ export default class game extends Phaser.Scene {
         this.boost_icono.setScrollFactor(0,0);
         this.boost_icono.setDepth(5);
         this.boost_icono.visible = false;
-        this.globo_icono = this.add.image(570,50,'boost');
+        this.globo_icono = this.add.image(570,50,'globo');
         this.globo_icono.setScale(0.2);
         this.globo_icono.setScrollFactor(0,0);
         this.globo_icono.setDepth(5);
         this.globo_icono.visible = false;
+        this.escudo_icono = this.add.image(570,50,'escudo');
+        this.escudo_icono.setScale(0.2);
+        this.escudo_icono.setScrollFactor(0,0);
+        this.escudo_icono.setDepth(5);
+        this.escudo_icono.visible = false;
 
 
         this.map = this.make.tilemap({ 
@@ -298,6 +305,18 @@ export default class game extends Phaser.Scene {
         });
 
         this.physics.add.overlap(this.player, this.globosGroup, this.handlePlayerCollisionGlobo, null, this);
+
+        //Power up escudo
+        let escudos = this.map.createFromObjects('Escudos',{name: "Escudo", key: "escudo"});
+        this.escudosGroup = this.add.group();
+        this.escudosGroup.addMultiple(escudos);
+        escudos.forEach(obj => {
+            this.physics.add.existing(obj);
+            obj.body.allowGravity = false;
+            obj.body.immovable = true;
+        });
+
+        this.physics.add.overlap(this.player, this.escudosGroup, this.handlePlayerCollisionEscudo, null, this);
 
         //Power up boost
         let boosters = this.map.createFromObjects('Boosters',{name: "Boost", key: "boost"});
@@ -577,6 +596,27 @@ export default class game extends Phaser.Scene {
                 this.boost_activo = false;
                 this.player.body.setVelocityY(-600);
                 this.boost_icono.visible = false;
+                this.cenizasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
+                this.gotasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
+                this.pajarosGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
+            }.bind(this)
+        });
+    }
+
+    handlePlayerCollisionEscudo(player,escudo){
+        this.escudo_activo = true;
+        escudo.body.visible = false;
+        escudo.destroy();
+        this.cenizasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=true;});
+        this.gotasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=true;});
+        this.pajarosGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=true;});
+        this.escudo_icono.visible = true;
+        this.time.addEvent({
+            delay: 60000, //Duracion del power up
+            loop: false,
+            callback: function(){
+                this.escudo_activo = false;
+                this.escudo_icono.visible = false;
                 this.cenizasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
                 this.gotasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
                 this.pajarosGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
