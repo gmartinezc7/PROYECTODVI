@@ -599,7 +599,7 @@ export default class game extends Phaser.Scene {
             loop: false,
             callback: function(){
                 this.boost_activo = false;
-                this.player.body.setVelocityY(-600);
+                //this.player.body.setVelocityY(-600);
                 this.boost_icono.visible = false;
                 this.cenizasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
                 this.gotasGroup.getChildren().forEach(function(n){ n.body.checkCollision.none=false;});
@@ -650,7 +650,7 @@ export default class game extends Phaser.Scene {
             this.x2_activo = false;
             this.globo_activo = false;
             this.boost_activo = false;
-            this.escudo_activo = false; 
+            this.escudo_activo = false;
             this.scene.start('escenaFinal',{numero : 0});
             
         }        

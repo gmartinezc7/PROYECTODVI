@@ -41,10 +41,12 @@ export default class menuniveles extends Phaser.Scene {
 			numero: 1,
 		};
 
+
+
 		this.character = this.registry.get('selectedCharacter');
 
 		const totalStars = this.registry.get('totalStars') || 0;
-		const EsferaCont=this.registry.get('EsferaCont')|| 0;
+		const EsferaCont= this.registry.get('EsferaCont')|| 0;
 
 		const starImage = this.add.image(100,50, 'estrellas');
         starImage.setScale(0.25);
@@ -118,6 +120,7 @@ export default class menuniveles extends Phaser.Scene {
         this.buttonBack = this.add.image(600,640,'back').setInteractive();
         this.buttonBack.on('pointerdown', pointer => {
             this.scene.start('titulo');
+			/*
 			this.registry.set('levelCompleted', 1);
 			this.registry.set('totalStars', 0);
 			this.registry.set('bestScoreLevel1', 0);
@@ -126,6 +129,8 @@ export default class menuniveles extends Phaser.Scene {
 			this.registry.set('bestScoreLevel4', 0);
 			this.registry.set('bestScoreLevel5', 0);
 			this.registry.set('EsferaCont',0);
+			*/
+
 	    });
 		this.skins = this.add.image(350,660, 'skins').setInteractive();
 		this.skins.setScale(0.6);
