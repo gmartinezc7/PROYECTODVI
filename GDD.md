@@ -75,7 +75,7 @@ Si el personaje jugable colisiona con un enemigo, la partida finaliza.
 
 #### Potenciadores
 
-Existen 3 tipos de potenciadores:
+Existen 4 tipos de potenciadores:
 
 ##### Imán de esferas del luz
 
@@ -87,10 +87,6 @@ Cuando el personaje colisiona con un potenciador de impulso momentáneo, se cata
 
 - Es inmune a las colisiones con los enemigos.
 - Se invalida la opción de saltar, ya que el personaje está siendo impulsado hacia arriba.
-
-##### Reducción de gravedad
-
-Cuando el personaje colisiona con un potenciador de reducción de gravedad, la gravedad aplicada sobre el personaje reduce su valor, lo que da un efecto de "flote". Esto permite al jugador una mayor oportunidad para recoger más esferas de luz o de esquivar enemigos.
 
 ##### Escudo
 
@@ -213,11 +209,15 @@ Su diseño es el clásico imán de herradura con dos polos, azul y rojo.
 
 ##### Impulso momentáneo
 
-El diseño se basa en un cohete simple con forma de flecha apuntando hacia arriba.
+El diseño seran dos flechas apuntando hacia arriba
 
-##### Reducción de gravedad
+##### Escudo
 
-El diseño será un simple globo hinchado con un color de alto contraste con la esfera de luz en la que se encuentra.
+El diseño será un escudo de "plancha" simbolizando protección
+
+##### Multiplicador
+
+El diseño serán los caracteres "x2" utilizando la tipografía del título del juego
 
 ### Mapas (Niveles)
 
