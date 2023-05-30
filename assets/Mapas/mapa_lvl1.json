@@ -2120,7 +2120,63 @@
               "visible":true,
               "x":0,
               "y":0
-             }],
+             }, 
+             {
+              "draworder":"topdown",
+              "id":9,
+              "name":"Imanes",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":170,
+                      "name":"Iman",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":142.666666666667,
+                      "y":10872
+                     }, 
+                     {
+                      "height":72,
+                      "id":171,
+                      "name":"Iman",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":433.333333333333,
+                      "y":1293.99998333333
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             }, 
+             {
+              "draworder":"topdown",
+              "id":10,
+              "name":"Multiplicadores",
+              "objects":[
+                     {
+                      "height":72,
+                      "id":172,
+                      "name":"Multiplicador",
+                      "rotation":0,
+                      "type":"",
+                      "visible":true,
+                      "width":72,
+                      "x":505.333333333333,
+                      "y":10874.6666666667
+                     }],
+              "opacity":1,
+              "type":"objectgroup",
+              "visible":true,
+              "x":0,
+              "y":0
+             }
+             ],
        
  "nextlayerid":8,
  "nextobjectid":169,
