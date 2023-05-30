@@ -4,7 +4,7 @@ Este proyecto es un trabajo universitario para la asignatura optativa "Desarroll
 
 ## Enlace al juego
 
-
+https://gmartinezc7.github.io/PROYECTODVI/
 
 ## Información básica
 
@@ -68,7 +68,8 @@ Las plataformas podrán variar en longitud y también es posible que algunas se 
 Existen dos tipos de enemigos:
 
 - Un enemigo que cae desde arriba de la pantalla en dirección opuesta a la que se mueve el personaje
-- Otro enemigo que aparece ocasionalmente sobre las plataformas que usa el jugador
+- Un enemigo que aparece ocasionalmente sobre las plataformas que usa el jugador
+- Un enemigo que se mueve horizontalmente a través de la pantalla entre las plataformas
 
 Si el personaje jugable colisiona con un enemigo, la partida finaliza.
 
@@ -90,6 +91,14 @@ Cuando el personaje colisiona con un potenciador de impulso momentáneo, se cata
 ##### Reducción de gravedad
 
 Cuando el personaje colisiona con un potenciador de reducción de gravedad, la gravedad aplicada sobre el personaje reduce su valor, lo que da un efecto de "flote". Esto permite al jugador una mayor oportunidad para recoger más esferas de luz o de esquivar enemigos.
+
+##### Escudo
+
+Cuando el personaje colisiona con un potenciador de escudo, le otorga invulnerabilidad con las colisiones contra los enemigos
+
+##### Multiplicador
+
+Cuando el personaje colisiona con un potencidador de multiplciador, la puntuación adquirida por las esferas de luz se multiplica por 2
 
 ### Físicas
 
@@ -130,13 +139,29 @@ Los niveles se superaran cuando el jugador llegue a una altura establecida.
 
 El nivel termina en derrota si el personaje jugable cae más allá del rango de la cámara, haciendo que este desaparezca, o cuando colisione con un enemigo.
 
+### Progreso
+
+Existe un sistema de estrellas y esferas:
+
+- Cuando se supera un nivel se asigna un número de estrellas dependiendo de la puntuación obtenida en el nivel (número de esferas conseguidas)
+  - Si se recogen el 80% de las esferas, se otorgan 3 estrellas
+  - Si se recogen el 40% de las esferas, se otorgan 2 estrellas
+  - Si se recogen el menos del 40% de las esferas, se otorga 1 estrella
+- Las esferas recogidas en un nivel se acumulan en un contador. 
+
+Para poder jugar niveles superiores, es necesario que número de estrellas y esferas total supere un umbral. Cuánto más alto sea el número de nivel, más alto será este umbral.
+
 ### Pantalla y cámara
 
 La pantalla de juego será un cuadrado de tamaño 720x720. Sin embargo la escena será de un tamaño mayor que acogerá todo el nivel (__Altura_x720). La cámara sigue al personaje cuando suba hacia arriba de la escena, pero no cuando este descienda. 
 
 ### Menús
 
-El menú principal es lo primero que ve el jugador al iniciar el juego. Cuenta con un botón de inicio que lleva al jugador a otra pantalla para elegir el nivel que desee. Al hacer click en uno de estos niveles, se iniciará el juego.
+El menú principal es lo primero que ve el jugador al iniciar el juego. Cuenta con un botón de inicio que lleva al jugador a otra pantalla para elegir el nivel que desee. 
+
+En la pantalla de niveles, se mostrará el número total de estrellas conseguidas, las estrellas conseguidas en cada nivel y el número total de esferas conseguidas. Además se podrá acceder desde aquí al menú de la tienda de skins.
+
+Al hacer click en uno de estos niveles, se iniciará el juego.
 
 El juego pude terminar con una victoria o una derrota, y se representa con un mensaje acorde. En ambos casos, existirán dos botones con este mensaje:
 
@@ -144,6 +169,8 @@ El juego pude terminar con una victoria o una derrota, y se representa con un me
 - Un botón para regresar al menú principal
 
 Durante el juego, se muestra un botón de pausa en una esquina de la pantalla, accionable también mediante la tecla de escape. Este botón pausará el juego y ofrecerá en forma de botón la opción para reanudar el juego o volver al menú principal.
+
+En el menú de skins, el jugador podrá gastar esferas en la compra de diferentes apariencias usando esferas. Algunos cosméticos requieren que se completen ciertos niveles primero.
 
 ## Arte
 
